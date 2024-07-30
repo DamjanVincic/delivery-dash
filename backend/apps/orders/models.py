@@ -1,4 +1,5 @@
 from django.db import models
+from apps.deliveries.models import Delivery
 
 
 class Order(models.Model):
@@ -29,4 +30,4 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.CharField(choices=PAYMENT_CHOICES)
     status = models.SmallIntegerField(choices=STATUS_CHOICES, default=PENDING)
-    # TODO: Add a relationship to the route model
+    delivery = models.ForeignKey(Delivery, related_name='orders', on_delete=models.SET_NULL, null=True)
