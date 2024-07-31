@@ -4,10 +4,10 @@ from apps.deliveries.serializers import DeliverySerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    delivery = DeliverySerializer()
+    delivery = DeliverySerializer(read_only=True)
 
     class Meta:
         model = Order
         fields = ['created_at', 'deliver_at', 'buyer_firstname', 'buyer_lastname', 'address', 'phone_number', 'price',
                   'payment_method', 'status', 'delivery']
-        read_only_fields = ['created_at']
+        read_only_fields = ['created_at', 'status']
