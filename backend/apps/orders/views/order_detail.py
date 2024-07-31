@@ -28,7 +28,7 @@ class OrderDetail(views.APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @extend_schema(request=OrderSerializer, responses={204: None})
+    @extend_schema(responses={204: None})
     def delete(self, request, pk):
         try:
             order = Order.objects.get(pk=pk)

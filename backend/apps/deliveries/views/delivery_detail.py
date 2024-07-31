@@ -27,3 +27,12 @@ class DeliveryDetail(views.APIView):
             serializer = DeliverySerializer(delivery)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @extend_schema(responses={204: None})
+    def delete(self, request, pk):
+        try:
+            delivery = Delivery.objects.get(pk=pk)
+            delivery.delete()
+        except Delivery.DoesNotExist:
+            pass
+        return Response(status=status.HTTP_204_NO_CONTENT)
