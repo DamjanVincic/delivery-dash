@@ -1,5 +1,5 @@
-from .models import Order
-from .serializers import OrderSerializer
+from ..models import Order
+from ..serializers import OrderSerializer
 from rest_framework import views
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema
