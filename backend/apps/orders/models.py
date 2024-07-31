@@ -30,4 +30,4 @@ class Order(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     payment_method = models.SmallIntegerField(choices=PAYMENT_CHOICES)
     status = models.SmallIntegerField(choices=STATUS_CHOICES, default=PENDING)
-    delivery = models.ForeignKey(Delivery, related_name='orders', on_delete=models.SET_NULL, null=True)
+    delivery = models.ForeignKey(Delivery, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True)
