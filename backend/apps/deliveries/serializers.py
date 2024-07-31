@@ -8,4 +8,5 @@ class DeliverySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Delivery
-        fields = ['driver']
+        fields = ['id', 'driver']
+        read_only_fields = ['id']
