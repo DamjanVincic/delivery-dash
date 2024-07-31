@@ -3,12 +3,12 @@ from apps.deliveries.models import Delivery
 
 
 class Order(models.Model):
-    CASH = 0
-    CARD = 1
+    CASH = 'cash'
+    CARD = 'card'
 
-    PENDING = 0
-    DELIVERED = 1
-    FAILED = 2
+    PENDING = 'pending'
+    DELIVERED = 'delivered'
+    FAILED = 'failed'
 
     PAYMENT_CHOICES = (
         (CASH, 'Cash'),
@@ -28,6 +28,6 @@ class Order(models.Model):
     address = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.SmallIntegerField(choices=PAYMENT_CHOICES)
-    status = models.SmallIntegerField(choices=STATUS_CHOICES, default=PENDING)
+    payment_method = models.CharField(choices=PAYMENT_CHOICES)
+    status = models.CharField(choices=STATUS_CHOICES, default=PENDING)
     delivery = models.ForeignKey(Delivery, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True)

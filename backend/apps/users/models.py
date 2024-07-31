@@ -4,9 +4,9 @@ from django.core.validators import MinLengthValidator
 
 
 class User(AbstractUser):
-    ADMIN = 0
-    DRIVER = 1
-    DISPATCHER = 2
+    ADMIN = 'admin'
+    DRIVER = 'driver'
+    DISPATCHER = 'dispatcher'
 
     ROLE_CHOICES = (
         (ADMIN, 'Administrator'),
@@ -16,5 +16,5 @@ class User(AbstractUser):
 
     first_name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
     last_name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
-    role = models.SmallIntegerField(choices=ROLE_CHOICES, null=True)  # Temp for superuser creation
+    role = models.CharField(choices=ROLE_CHOICES, null=True)  # Temp for superuser creation
     phone_number = models.CharField(max_length=20, validators=[MinLengthValidator(10)])
