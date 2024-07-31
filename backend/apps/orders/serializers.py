@@ -1,13 +1,10 @@
 from rest_framework import serializers
 from .models import Order
-from apps.deliveries.serializers import DeliverySerializer
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    delivery = DeliverySerializer(read_only=True)
-
     class Meta:
         model = Order
         fields = ['id', 'created_at', 'deliver_at', 'buyer_firstname', 'buyer_lastname', 'address', 'phone_number',
                   'price', 'payment_method', 'status', 'delivery']
-        read_only_fields = ['id', 'created_at', 'status']
+        read_only_fields = ['id', 'created_at', 'status', 'delivery']
