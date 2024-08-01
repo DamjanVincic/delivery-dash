@@ -1,1 +1,2 @@
 from .user_serializer import UserSerializer
+from .auth_token_response_serializer import AuthTokenResponseSerializer
