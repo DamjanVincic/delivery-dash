@@ -31,3 +31,7 @@ urlpatterns = [
     path('orders/', include('apps.orders.urls')),
     path('deliveries/', include('apps.deliveries.urls')),
 ]
+
+urlpatterns = [
+    path('api/v1/', include(urlpatterns)),
+]
