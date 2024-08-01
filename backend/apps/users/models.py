@@ -1,8 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinLengthValidator
+from django.db import models
 
 
+# TODO: Split users into separate classes?
+# TODO: Create user model from scratch? (AbstractBaseUser?)
 class User(AbstractUser):
     ADMIN = 'admin'
     DRIVER = 'driver'

@@ -1,5 +1,6 @@
-from .views import DeliveryList, DeliveryDetail
 from django.urls import path
+
+from .views import DeliveryList, DeliveryDetail
 
 urlpatterns = [
     path('', DeliveryList.as_view()),

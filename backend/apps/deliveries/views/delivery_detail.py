@@ -1,5 +1,7 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework import views, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from ..models import Delivery
@@ -7,6 +9,9 @@ from ..serializers import DeliverySerializer, DeliveryCreateUpdateSerializer
 
 
 class DeliveryDetail(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(responses={200: DeliverySerializer, 404: None})
     def get(self, request, pk):
         try:

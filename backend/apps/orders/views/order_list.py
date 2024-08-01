@@ -2,11 +2,16 @@ from ..models import Order
 from ..serializers import OrderSerializer
 from rest_framework import views
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
 
 
 class OrderList(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     @extend_schema(responses=OrderSerializer(many=True))
     def get(self, request):
         orders = Order.objects.all()

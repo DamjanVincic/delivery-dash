@@ -1,7 +1,8 @@
-from ..models import Delivery
+from rest_framework import serializers
+
 from apps.orders.models import Order
 from apps.users.models import User
-from rest_framework import serializers
+from ..models import Delivery
 
 
 class DeliveryCreateUpdateSerializer(serializers.ModelSerializer):
