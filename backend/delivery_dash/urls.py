@@ -19,6 +19,10 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from apps.users.urls import urlpatterns as user_urlpatterns
+from apps.deliveries.urls import (
+    urlpatterns as delivery_urlpatterns,
+    driver_urlpatterns as driver_delivery_urlpatterns
+)
 
 schema_urlpatterns = [
     path('', SpectacularAPIView.as_view(), name='schema'),
@@ -28,11 +32,11 @@ schema_urlpatterns = [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls')),
     path('schema/', include(schema_urlpatterns)),
     path('orders/', include('apps.orders.urls')),
-    path('deliveries/', include('apps.deliveries.urls')),
+    path('deliveries/', include(delivery_urlpatterns)),
     *user_urlpatterns,
+    path('driver/', include(driver_delivery_urlpatterns)),
 ]
 
 urlpatterns = [
