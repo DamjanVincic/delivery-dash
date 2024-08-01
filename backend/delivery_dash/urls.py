@@ -21,7 +21,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from apps.users.urls import urlpatterns as user_urlpatterns
 from apps.deliveries.urls import (
     urlpatterns as delivery_urlpatterns,
-    driver_urlpatterns as driver_delivery_urlpatterns
+    driver_urlpatterns as driver_delivery_urlpatterns,
+    dispatcher_urlpatterns as dispatcher_delivery_urlpatterns
 )
 
 schema_urlpatterns = [
@@ -34,6 +35,10 @@ driver_urlpatterns = [
     path('deliveries/', include(driver_delivery_urlpatterns)),
 ]
 
+dispatcher_urlpatterns = [
+    path('deliveries/', include(dispatcher_delivery_urlpatterns)),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('schema/', include(schema_urlpatterns)),
@@ -41,6 +46,7 @@ urlpatterns = [
     path('deliveries/', include(delivery_urlpatterns)),
     *user_urlpatterns,
     path('driver/', include(driver_urlpatterns)),
+    path('dispatcher/', include(dispatcher_urlpatterns)),
 ]
 
 urlpatterns = [
