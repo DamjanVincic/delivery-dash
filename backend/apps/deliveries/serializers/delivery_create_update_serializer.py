@@ -11,5 +11,4 @@ class DeliveryCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Delivery
-        fields = ['id', 'driver', 'orders']
-        read_only_fields = ['id']
+        fields = ['driver', 'orders']
