@@ -1,4 +1,5 @@
 from django.db import models
+
 from apps.deliveries.models import Delivery
 
 

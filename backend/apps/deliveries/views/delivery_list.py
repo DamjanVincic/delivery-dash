@@ -1,10 +1,11 @@
+from drf_spectacular.utils import extend_schema
+from rest_framework import views, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
 from ..models import Delivery
 from ..serializers import DeliverySerializer, DeliveryCreateUpdateSerializer
-from rest_framework import views, status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from drf_spectacular.utils import extend_schema
 
 
 class DeliveryList(views.APIView):
