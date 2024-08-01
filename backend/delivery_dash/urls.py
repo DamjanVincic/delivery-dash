@@ -39,7 +39,7 @@ dispatcher_urlpatterns = [
     path('deliveries/', include(dispatcher_delivery_urlpatterns)),
 ]
 
-urlpatterns = [
+v1_urlpatterns = [
     path('admin/', admin.site.urls),
     path('schema/', include(schema_urlpatterns)),
     path('orders/', include('apps.orders.urls')),
@@ -50,5 +50,9 @@ urlpatterns = [
 ]
 
 urlpatterns = [
-    path('api/v1/', include(urlpatterns)),
+    path('v1/', include(v1_urlpatterns)),
+]
+
+urlpatterns = [
+    path('api/', include(urlpatterns)),
 ]
