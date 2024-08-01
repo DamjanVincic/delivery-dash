@@ -30,13 +30,17 @@ schema_urlpatterns = [
     path('redoc/', SpectacularRedocView.as_view(url_name='schema')),
 ]
 
+driver_urlpatterns = [
+    path('deliveries/', include(driver_delivery_urlpatterns)),
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('schema/', include(schema_urlpatterns)),
     path('orders/', include('apps.orders.urls')),
     path('deliveries/', include(delivery_urlpatterns)),
     *user_urlpatterns,
-    path('driver/', include(driver_delivery_urlpatterns)),
+    path('driver/', include(driver_urlpatterns)),
 ]
 
 urlpatterns = [
