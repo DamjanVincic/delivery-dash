@@ -1,1 +1,2 @@
 from .order_serializer import OrderSerializer
+from .driver_order_fail_serializer import DriverOrderFailSerializer
