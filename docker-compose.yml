@@ -13,7 +13,7 @@ services:
       retries: 3
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:8.10
     restart: unless-stopped
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     env_file: .env
     ports:
-      - "8001:8000"
+      - "8002:8000"
     volumes:
       - ./backend:/app # For hot reload
     depends_on:
