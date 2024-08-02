@@ -24,6 +24,10 @@ from apps.deliveries.urls import (
     driver_urlpatterns as driver_delivery_urlpatterns,
     dispatcher_urlpatterns as dispatcher_delivery_urlpatterns
 )
+from apps.orders.urls import (
+    urlpatterns as order_urlpatterns,
+    driver_urlpatterns as driver_order_urlpatterns,
+)
 
 schema_urlpatterns = [
     path('', SpectacularAPIView.as_view(), name='schema'),
@@ -33,6 +37,7 @@ schema_urlpatterns = [
 
 driver_urlpatterns = [
     path('deliveries/', include(driver_delivery_urlpatterns)),
+    path('order/', include(driver_order_urlpatterns)),
 ]
 
 dispatcher_urlpatterns = [
@@ -42,7 +47,7 @@ dispatcher_urlpatterns = [
 v1_urlpatterns = [
     path('admin/', admin.site.urls),
     path('schema/', include(schema_urlpatterns)),
-    path('orders/', include('apps.orders.urls')),
+    path('orders/', include(order_urlpatterns)),
     path('deliveries/', include(delivery_urlpatterns)),
     *user_urlpatterns,
     path('driver/', include(driver_urlpatterns)),
