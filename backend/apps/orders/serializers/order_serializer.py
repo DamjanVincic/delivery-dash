@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from drf_spectacular.utils import extend_schema_field
+from drf_spectacular.types import OpenApiTypes
 
 from ..models import Order
 
@@ -16,5 +18,6 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_is_late(self, obj) -> serializers.BooleanField:
         return obj.delivered_at is not None and obj.delivered_at > obj.deliver_at
 
+    @extend_schema_field(OpenApiTypes.INT)
     def get_late_time(self, obj):
         return (obj.delivered_at - obj.deliver_at).seconds // 60 if obj.delivered_at is not None else None
