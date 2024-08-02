@@ -14,4 +14,6 @@ Delivery tracking app for full stack internship at TIAC d.o.o 2024
     ```bash
     docker compose up -d
     ```
-1. Backend can be accessed at `localhost:8001`
+
+- Frontend can be accessed at `localhost:8001`
+- Backend can be accessed at `localhost:8002`
