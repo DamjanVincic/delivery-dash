@@ -27,6 +27,7 @@ from apps.deliveries.urls import (
 from apps.orders.urls import (
     urlpatterns as order_urlpatterns,
     driver_urlpatterns as driver_order_urlpatterns,
+    dispatcher_urlpatterns as dispatcher_order_urlpatterns
 )
 
 schema_urlpatterns = [
@@ -42,6 +43,7 @@ driver_urlpatterns = [
 
 dispatcher_urlpatterns = [
     path('deliveries/', include(dispatcher_delivery_urlpatterns)),
+    path('orders/', include(dispatcher_order_urlpatterns)),
 ]
 
 v1_urlpatterns = [
