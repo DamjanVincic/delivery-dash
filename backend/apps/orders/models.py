@@ -32,3 +32,5 @@ class Order(models.Model):
     payment_method = models.CharField(choices=PAYMENT_CHOICES)
     status = models.CharField(choices=STATUS_CHOICES, default=PENDING)
     delivery = models.ForeignKey(Delivery, related_name='orders', on_delete=models.SET_NULL, null=True, blank=True)
+    comment = models.CharField(max_length=255, null=True, blank=True)
+    delivered_at = models.DateTimeField(null=True, blank=True)

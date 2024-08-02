@@ -11,5 +11,13 @@ class DeliveryCreateUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Delivery
-        fields = ['id', 'driver', 'orders']
-        read_only_fields = ['id']
+        fields = ['driver', 'orders']
+
+    def validate(self, data):
+        # driver = data['driver']
+        # if driver.delivery:
+        #     raise serializers.ValidationError('Driver already has a delivery')
+        # return data
+        if len(set(order.deliver_at.date() for order in data.get('orders'))) > 1:
+            raise serializers.ValidationError('Orders must have the same delivery date')
+        return data

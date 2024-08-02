@@ -19,6 +19,16 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from apps.users.urls import urlpatterns as user_urlpatterns
+from apps.deliveries.urls import (
+    urlpatterns as delivery_urlpatterns,
+    driver_urlpatterns as driver_delivery_urlpatterns,
+    dispatcher_urlpatterns as dispatcher_delivery_urlpatterns
+)
+from apps.orders.urls import (
+    urlpatterns as order_urlpatterns,
+    driver_urlpatterns as driver_order_urlpatterns,
+    dispatcher_urlpatterns as dispatcher_order_urlpatterns
+)
 
 schema_urlpatterns = [
     path('', SpectacularAPIView.as_view(), name='schema'),
@@ -26,15 +36,30 @@ schema_urlpatterns = [
     path('redoc/', SpectacularRedocView.as_view(url_name='schema')),
 ]
 
-urlpatterns = [
+driver_urlpatterns = [
+    path('deliveries/', include(driver_delivery_urlpatterns)),
+    path('order/', include(driver_order_urlpatterns)),
+]
+
+dispatcher_urlpatterns = [
+    path('deliveries/', include(dispatcher_delivery_urlpatterns)),
+    path('orders/', include(dispatcher_order_urlpatterns)),
+]
+
+v1_urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('api-auth/', include('rest_framework.urls')),
     path('schema/', include(schema_urlpatterns)),
-    path('orders/', include('apps.orders.urls')),
-    path('deliveries/', include('apps.deliveries.urls')),
+    path('orders/', include(order_urlpatterns)),
+    path('deliveries/', include(delivery_urlpatterns)),
     *user_urlpatterns,
+    path('driver/', include(driver_urlpatterns)),
+    path('dispatcher/', include(dispatcher_urlpatterns)),
 ]
 
 urlpatterns = [
-    path('api/v1/', include(urlpatterns)),
+    path('v1/', include(v1_urlpatterns)),
+]
+
+urlpatterns = [
+    path('api/', include(urlpatterns)),
 ]
