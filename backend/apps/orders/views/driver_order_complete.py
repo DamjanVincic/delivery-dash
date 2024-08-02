@@ -14,13 +14,18 @@ class DriverOrderComplete(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsDriver]
 
-    # TODO: let driver only complete the orders that are assigned to him
-    @extend_schema(responses={200: OrderSerializer, 404: None})
+    @extend_schema(responses={200: OrderSerializer, 400: None, 403: None, 404: None})
     def patch(self, request, pk):
         try:
             order = Order.objects.get(pk=pk)
         except Order.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        if not order.delivery or not order.delivery.driver or order.delivery.driver != request.user:
+            return Response({'error': 'You are not the assigned driver'}, status=status.HTTP_403_FORBIDDEN)
+        if order.status != Order.PENDING:
+            return Response({'error': 'The order isn\'t pending'}, status=status.HTTP_400_BAD_REQUEST)
+
         order.status = Order.DELIVERED
         order.delivered_at = timezone.now()
         order.save()
