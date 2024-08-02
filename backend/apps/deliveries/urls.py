@@ -1,13 +1,13 @@
 from django.urls import path
 
-from .views import DeliveryList, DeliveryDetail, DriverDeliveryList, DispatcherDeliveryList
+from .views import DeliveryList, DeliveryDetail, DriverDeliveryList
 
 driver_urlpatterns = [
     path('', DriverDeliveryList.as_view()),
 ]
 
 dispatcher_urlpatterns = [
-    path('', DispatcherDeliveryList.as_view()),
+
 ]
 
 urlpatterns = [
