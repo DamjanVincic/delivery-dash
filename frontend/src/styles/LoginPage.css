@@ -1,0 +1,10 @@
+#bg-img {
+  height: 550px;
+}
+  
+/* Height for devices larger than 992px */
+@media (min-width: 992px) {
+  #bg-img {
+    height: 750px;
+  }
+}
