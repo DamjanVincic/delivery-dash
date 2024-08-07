@@ -1,3 +1,4 @@
+import Footer from "./components/Footer.jsx";
 import NavBar from "./components/NavBar.jsx";
 import LoginPage from "./views/LoginPage.jsx";
 
@@ -6,6 +7,7 @@ function App() {
     <>
       <NavBar />
       <LoginPage />
+      <Footer />
     </>
   );
 }
