@@ -1,9 +1,11 @@
+import NavBar from "./components/NavBar.jsx";
+
 function App() {
   return (
     <>
-      <h1>App</h1>
+      <NavBar />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
