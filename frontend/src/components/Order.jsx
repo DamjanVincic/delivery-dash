@@ -6,6 +6,7 @@ import { getBadgeColor } from "../utils/common";
 
 export default function Order({ order }) {
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
+  const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
 
   return (
     <>
@@ -27,7 +28,11 @@ export default function Order({ order }) {
         </td>
         <td>
           <div className="d-flex gap-2">
-            <MDBBtn rounded color="primary">
+            <MDBBtn
+              rounded
+              color="primary"
+              onClick={() => setShowOrderDetailModal(true)}
+            >
               <MDBIcon fas icon="info" />
             </MDBBtn>
             <MDBBtn rounded color="success">
@@ -48,6 +53,12 @@ export default function Order({ order }) {
         show={showOrderCancelModal}
         onClose={() => setShowOrderCancelModal(false)}
         onConfirm={() => console.log("Order cancelled")}
+      />
+
+      <OrderDetailModal
+        show={showOrderDetailModal}
+        onClose={() => setShowOrderDetailModal(false)}
+        order={order}
       />
     </>
   );
