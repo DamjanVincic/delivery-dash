@@ -1,12 +1,7 @@
 import { useState } from "react";
-import {
-  MDBCardText,
-  MDBListGroupItem,
-  MDBBadge,
-  MDBBtn,
-  MDBIcon,
-} from "mdb-react-ui-kit";
+import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
+import OrderDetailModal from "./OrderDetailModal";
 
 const getBadgeColor = (status) => {
   switch (status) {
@@ -28,34 +23,40 @@ export default function Order({ order }) {
 
   return (
     <>
-      <MDBListGroupItem className="d-flex justify-content-between align-items-center">
-        <div>
-          <MDBCardText>
-            <strong>Customer:</strong> {order.customer}
-          </MDBCardText>
-          <MDBCardText>
-            <strong>Address:</strong> {order.address}
-          </MDBCardText>
-        </div>
-        <MDBBadge color={getBadgeColor(order.status)} pill>
-          {order.status}
-        </MDBBadge>
-        <div className="d-flex gap-2">
-          <MDBBtn rounded color="primary">
-            <MDBIcon fas icon="info" />
-          </MDBBtn>
-          <MDBBtn rounded color="success">
-            <MDBIcon fas icon="check" />
-          </MDBBtn>
-          <MDBBtn
-            rounded
-            color="danger"
-            onClick={() => setShowOrderCancelModal(true)}
-          >
-            <MDBIcon fas icon="times" />
-          </MDBBtn>
-        </div>
-      </MDBListGroupItem>
+      <tr>
+        <td>{order.buyer_firstname + " " + order.buyer_lastname}</td>
+        <td>{order.address}</td>
+        <td>
+          {order.payment_method === "cash" ? (
+            <MDBIcon far icon="money-bill-alt" />
+          ) : (
+            <MDBIcon fas icon="credit-card" />
+          )}{" "}
+          {order.price}
+        </td>
+        <td>
+          <MDBBadge color={getBadgeColor(order.status)} pill>
+            {order.status}
+          </MDBBadge>
+        </td>
+        <td>
+          <div className="d-flex gap-2">
+            <MDBBtn rounded color="primary">
+              <MDBIcon fas icon="info" />
+            </MDBBtn>
+            <MDBBtn rounded color="success">
+              <MDBIcon fas icon="check" />
+            </MDBBtn>
+            <MDBBtn
+              rounded
+              color="danger"
+              onClick={() => setShowOrderCancelModal(true)}
+            >
+              <MDBIcon fas icon="times" />
+            </MDBBtn>
+          </div>
+        </td>
+      </tr>
 
       <OrderCancelConfirmationModal
         show={showOrderCancelModal}
