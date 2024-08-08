@@ -4,6 +4,7 @@ import {
   MDBModalDialog,
   MDBModalContent,
   MDBModalHeader,
+  MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
   MDBBtn,
@@ -24,17 +25,12 @@ export default function CancelConfirmationModal({ show, onClose, onConfirm }) {
   };
 
   return (
-    <MDBModal staticBackdrop open={show} tabIndex="-1">
+    <MDBModal staticBackdrop open={show} onClose={onClose} tabIndex="-1">
       <MDBModalDialog centered>
         <MDBModalContent>
           <MDBModalHeader>
-            <h5 className="modal-title">Confirm Cancellation</h5>
-            <button
-              type="button"
-              className="btn-close"
-              aria-label="Close"
-              onClick={onClose}
-            ></button>
+            <MDBModalTitle>Confirm Cancellation</MDBModalTitle>
+            <MDBBtn className="btn-close" color="none" onClick={onClose} />
           </MDBModalHeader>
           <MDBModalBody>
             <p>
