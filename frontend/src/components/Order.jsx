@@ -2,21 +2,7 @@ import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "./OrderDetailModal";
-
-const getBadgeColor = (status) => {
-  switch (status) {
-    case "Pending":
-      return "warning";
-    case "In Progress":
-      return "info";
-    case "Delivered":
-      return "success";
-    case "Failed":
-      return "danger";
-    default:
-      return "secondary";
-  }
-};
+import { getBadgeColor } from "../utils/common";
 
 export default function Order({ order }) {
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
