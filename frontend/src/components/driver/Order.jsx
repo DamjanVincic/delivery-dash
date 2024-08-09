@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
-import { getBadgeColor } from "../../utils/common";
+import { getOrderStatusBadgeColor } from "../../utils/common";
 
 export default function Order({ order }) {
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
@@ -22,7 +22,7 @@ export default function Order({ order }) {
           {order.price}
         </td>
         <td>
-          <MDBBadge color={getBadgeColor(order.status)} pill>
+          <MDBBadge color={getOrderStatusBadgeColor(order.status)} pill>
             {order.status}
           </MDBBadge>
         </td>

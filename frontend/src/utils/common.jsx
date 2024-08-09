@@ -1,4 +1,4 @@
-export const getBadgeColor = (status) => {
+export const getOrderStatusBadgeColor = (status) => {
   switch (status) {
     case "Pending":
       return "warning";
