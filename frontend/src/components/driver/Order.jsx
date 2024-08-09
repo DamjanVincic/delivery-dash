@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
-import OrderDetailModal from "./OrderDetailModal";
-import { getBadgeColor } from "../utils/common";
+import OrderDetailModal from "../OrderDetailModal";
+import { getBadgeColor } from "../../utils/common";
 
 export default function Order({ order }) {
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
