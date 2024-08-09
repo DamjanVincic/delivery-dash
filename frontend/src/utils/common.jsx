@@ -12,3 +12,14 @@ export const getOrderStatusBadgeColor = (status) => {
       return "secondary";
   }
 };
+
+export const getDeliveryStatusBadgeColor = (status) => {
+  switch (status) {
+    case "in_progress":
+      return "warning";
+    case "finished":
+      return "success";
+    default:
+      return "secondary";
+  }
+};
