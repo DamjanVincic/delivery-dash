@@ -1,4 +1,4 @@
-import Delivery from "../components/Delivery";
+import Delivery from "../components/driver/Delivery";
 
 export default function DriverPage() {
   const orders = [

@@ -1,4 +1,4 @@
-export const getBadgeColor = (status) => {
+export const getOrderStatusBadgeColor = (status) => {
   switch (status) {
     case "Pending":
       return "warning";
@@ -8,6 +8,17 @@ export const getBadgeColor = (status) => {
       return "success";
     case "Failed":
       return "danger";
+    default:
+      return "secondary";
+  }
+};
+
+export const getDeliveryStatusBadgeColor = (status) => {
+  switch (status) {
+    case "in_progress":
+      return "warning";
+    case "finished":
+      return "success";
     default:
       return "secondary";
   }
