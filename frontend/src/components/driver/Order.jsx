@@ -8,22 +8,31 @@ export default function Order({ order }) {
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
   const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
 
+  const {
+    buyer_firstname,
+    buyer_lastname,
+    address,
+    payment_method,
+    price,
+    status,
+  } = order;
+
   return (
     <>
       <tr>
-        <td>{order.buyer_firstname + " " + order.buyer_lastname}</td>
-        <td>{order.address}</td>
+        <td>{buyer_firstname + " " + buyer_lastname}</td>
+        <td>{address}</td>
         <td>
-          {order.payment_method === "cash" ? (
+          {payment_method === "cash" ? (
             <MDBIcon far icon="money-bill-alt" />
           ) : (
             <MDBIcon fas icon="credit-card" />
           )}{" "}
-          {order.price}
+          {price}
         </td>
         <td>
-          <MDBBadge color={getOrderStatusBadgeColor(order.status)} pill>
-            {order.status}
+          <MDBBadge color={getOrderStatusBadgeColor(status)} pill>
+            {status}
           </MDBBadge>
         </td>
         <td>
