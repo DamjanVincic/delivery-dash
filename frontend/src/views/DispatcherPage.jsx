@@ -5,6 +5,7 @@ import {
   MDBTable,
   MDBTableHead,
 } from "mdb-react-ui-kit";
+import Drivers from "../components/dispatcher/Drivers";
 import Orders from "../components/dispatcher/Orders";
 
 const orders = [
@@ -30,20 +31,29 @@ const orders = [
   },
 ];
 
+const drivers = [
+  {
+    id: 1,
+    first_name: "John",
+    last_name: "Doe",
+    email: "test",
+    phone_number: "123-456-7890",
+  },
+  {
+    id: 2,
+    first_name: "Jane",
+    last_name: "Doe",
+    email: "test",
+    phone_number: "123-456-7890",
+  },
+];
+
 export default function DispatcherPage() {
   return (
     <MDBContainer>
       <MDBRow between>
         <MDBCol size="6">
-          <MDBTable>
-            <MDBTableHead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-              </tr>
-            </MDBTableHead>
-          </MDBTable>
+          <Drivers drivers={drivers} />
         </MDBCol>
         <MDBCol size="6">
           <Orders orders={orders} />
