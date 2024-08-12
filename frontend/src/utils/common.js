@@ -1,4 +1,4 @@
-export const getOrderStatusBadgeColor = (status) => {
+const getOrderStatusBadgeColor = (status) => {
   switch (status) {
     case "pending":
       return "warning";
@@ -13,7 +13,7 @@ export const getOrderStatusBadgeColor = (status) => {
   }
 };
 
-export const getDeliveryStatusBadgeColor = (status) => {
+const getDeliveryStatusBadgeColor = (status) => {
   switch (status) {
     case "in_progress":
       return "warning";
@@ -23,3 +23,13 @@ export const getDeliveryStatusBadgeColor = (status) => {
       return "secondary";
   }
 };
+
+const formatString = (str) => {
+  return str
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+export { getOrderStatusBadgeColor, getDeliveryStatusBadgeColor, formatString };
