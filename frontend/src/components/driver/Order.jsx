@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
+import { toast } from "react-toastify";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
 import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
@@ -25,8 +26,16 @@ export default function Order({ order }) {
       const response = await api.patch(`driver/order/${order.id}/complete/`);
       if (response.status === 200) order.status = response.data.status;
       setValue(!value);
+      toast.success("Order completed successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
     } catch (error) {
       console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
     }
   };
 
@@ -40,8 +49,16 @@ export default function Order({ order }) {
         order.comment = response.data.comment;
       }
       setValue(!value);
+      toast.success("Order cancelled successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
     } catch (error) {
       console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
     }
   };
 
