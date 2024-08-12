@@ -30,6 +30,21 @@ export default function Order({ order }) {
     }
   };
 
+  const cancelOrder = async (comment) => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/fail/`, {
+        comment,
+      });
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.comment = response.data.comment;
+      }
+      setValue(!value);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <>
       <tr>
@@ -74,7 +89,7 @@ export default function Order({ order }) {
       <OrderCancelConfirmationModal
         show={showOrderCancelModal}
         onClose={() => setShowOrderCancelModal(false)}
-        onConfirm={() => console.log("Order cancelled")}
+        onConfirm={cancelOrder}
       />
 
       <OrderDetailModal
