@@ -7,9 +7,7 @@ export default function DriverPage() {
 
   useEffect(() => {
     const fetchDelivery = async () => {
-      const response = await api.get("driver/deliveries/", {
-        headers: { Authorization: `Token ${localStorage.getItem("token")}` },
-      });
+      const response = await api.get("driver/deliveries/");
       setDelivery(response.data.length !== 0 ? response.data[0] : null);
     };
     fetchDelivery();
