@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -9,6 +10,10 @@ import {
 } from "mdb-react-ui-kit";
 
 export default function LoginForm() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
   return (
     <MDBContainer fluid>
       <MDBRow className="d-flex justify-content-center align-items-center h-100">
@@ -21,18 +26,22 @@ export default function LoginForm() {
               <h2 className="fw-bold mb-2 text-center">Sign in</h2>
               <p className="mb-3">Enter your email and password.</p>
 
+              {error && <div className="danger">{error}</div>}
+
               <MDBInput
                 wrapperClass="mb-4 w-100"
-                label="Email address"
-                id="formControlLg"
-                type="email"
+                label="Username"
+                type="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 size="lg"
               />
               <MDBInput
                 wrapperClass="mb-4 w-100"
                 label="Password"
-                id="formControlLg"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 size="lg"
               />
 
