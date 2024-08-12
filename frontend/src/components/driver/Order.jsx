@@ -3,8 +3,11 @@ import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
 import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
+import api from "../../utils/api";
 
 export default function Order({ order }) {
+  const [value, setValue] = useState(false);
+
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
   const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
 
@@ -16,6 +19,16 @@ export default function Order({ order }) {
     price,
     status,
   } = order;
+
+  const completeOrder = async () => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/complete/`);
+      if (response.status === 200) order.status = response.data.status;
+      setValue(!value);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   return (
     <>
@@ -44,7 +57,7 @@ export default function Order({ order }) {
             >
               <MDBIcon fas icon="info" />
             </MDBBtn>
-            <MDBBtn rounded color="success">
+            <MDBBtn rounded color="success" onClick={completeOrder}>
               <MDBIcon fas icon="check" />
             </MDBBtn>
             <MDBBtn
