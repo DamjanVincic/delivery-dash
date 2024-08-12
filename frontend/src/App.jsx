@@ -1,3 +1,5 @@
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer } from "react-toastify";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer.jsx";
 import NavBar from "./components/NavBar.jsx";
@@ -18,6 +20,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      <ToastContainer />
     </>
   );
 }
