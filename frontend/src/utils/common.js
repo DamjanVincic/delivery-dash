@@ -1,12 +1,12 @@
 export const getOrderStatusBadgeColor = (status) => {
   switch (status) {
-    case "Pending":
+    case "pending":
       return "warning";
-    case "In Progress":
+    case "in_progress":
       return "info";
-    case "Delivered":
+    case "delivered":
       return "success";
-    case "Failed":
+    case "failed":
       return "danger";
     default:
       return "secondary";
