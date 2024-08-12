@@ -12,7 +12,7 @@ import {
   MDBTableHead,
   MDBTableBody,
 } from "mdb-react-ui-kit";
-import { getOrderStatusBadgeColor } from "../utils/common";
+import { getOrderStatusBadgeColor, formatString } from "../utils/common";
 
 export default function OrderDetailModal({ show, onClose, order }) {
   return (
@@ -71,8 +71,11 @@ export default function OrderDetailModal({ show, onClose, order }) {
                     <strong>Status</strong>
                   </td>
                   <td>
-                    <MDBBadge color={getOrderStatusBadgeColor(order.status)} pill>
-                      {order.status}
+                    <MDBBadge
+                      color={getOrderStatusBadgeColor(order.status)}
+                      pill
+                    >
+                      {formatString(order.status)}
                     </MDBBadge>
                   </td>
                 </tr>

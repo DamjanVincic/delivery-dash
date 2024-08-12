@@ -7,7 +7,7 @@ import {
   MDBCollapse,
 } from "mdb-react-ui-kit";
 import Order from "./Order";
-import { getDeliveryStatusBadgeColor } from "../../utils/common";
+import { getDeliveryStatusBadgeColor, formatString } from "../../utils/common";
 
 export default function Delivery({ delivery, showOrders, setShowOrders }) {
   const { orders, status } = delivery;
@@ -18,7 +18,7 @@ export default function Delivery({ delivery, showOrders, setShowOrders }) {
         <td>Driver</td>
         <td>
           <MDBBadge color={getDeliveryStatusBadgeColor(status)} pill>
-            {status}
+            {formatString(status)}
           </MDBBadge>
         </td>
         <td>
