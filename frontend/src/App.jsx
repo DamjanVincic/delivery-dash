@@ -8,16 +8,16 @@ import DriverPage from "./views/DriverPage.jsx";
 function App() {
   return (
     <>
-      <NavBar />
       <Router>
+        <NavBar />
         <Routes>
           <Route path="/" exact element={<LoginPage />} />
           <Route path="/dispatcher" element={<DispatcherPage />} />
           <Route path="/driver" element={<DriverPage />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
+        <Footer />
       </Router>
-      <Footer />
     </>
   );
 }
