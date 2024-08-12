@@ -18,7 +18,8 @@ export default function LoginForm() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     const response = await login(username, password);
     const { success, token, user } = response;
     if (success) {
@@ -45,29 +46,30 @@ export default function LoginForm() {
               <p className="mb-3">Enter your email and password.</p>
 
               {error && <div className="danger">{error}</div>}
+              <form>
+                <MDBInput
+                  wrapperClass="mb-4 w-100"
+                  label="Username"
+                  type="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  size="lg"
+                />
+                <MDBInput
+                  wrapperClass="mb-4 w-100"
+                  label="Password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  size="lg"
+                />
 
-              <MDBInput
-                wrapperClass="mb-4 w-100"
-                label="Username"
-                type="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                size="lg"
-              />
-              <MDBInput
-                wrapperClass="mb-4 w-100"
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                size="lg"
-              />
+                <hr className="mb-4" />
 
-              <hr className="mb-4" />
-
-              <MDBBtn size="lg" onClick={handleLogin}>
-                Sign In
-              </MDBBtn>
+                <MDBBtn size="lg" onClick={handleLogin} type="submit">
+                  Sign In
+                </MDBBtn>
+              </form>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
