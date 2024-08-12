@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from django.utils import timezone
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
@@ -7,6 +8,7 @@ from ..models import Order
 from ..serializers import OrderSerializer
 
 
+@extend_schema(summary="Get today's orders")
 class DispatcherOrderList(generics.ListAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated, IsDispatcher]
