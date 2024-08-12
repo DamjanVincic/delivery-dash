@@ -18,7 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
-from apps.users.urls import urlpatterns as user_urlpatterns
+from apps.users.urls import (
+    urlpatterns as user_urlpatterns,
+    dispatcher_urlpatterns as dispatcher_user_urlpatterns,
+)
 from apps.deliveries.urls import (
     urlpatterns as delivery_urlpatterns,
     driver_urlpatterns as driver_delivery_urlpatterns,
@@ -44,6 +47,7 @@ driver_urlpatterns = [
 dispatcher_urlpatterns = [
     path('deliveries/', include(dispatcher_delivery_urlpatterns)),
     path('orders/', include(dispatcher_order_urlpatterns)),
+    path('users/', include(dispatcher_user_urlpatterns)),
 ]
 
 v1_urlpatterns = [
