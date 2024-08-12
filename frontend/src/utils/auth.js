@@ -20,4 +20,9 @@ const login = async (username, password) => {
   }
 };
 
-export { login };
+const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+};
+
+export { login, logout };
