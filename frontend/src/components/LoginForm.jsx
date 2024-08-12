@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MDBBtn,
   MDBContainer,
@@ -8,11 +9,28 @@ import {
   MDBCol,
   MDBInput,
 } from "mdb-react-ui-kit";
+import { login } from "../utils/auth";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const response = await login(username, password);
+    const { success, token, user } = response;
+    if (success) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      user.role === "dispatcher"
+        ? navigate("/dispatcher")
+        : navigate("/driver");
+    } else {
+      setError(response.error);
+    }
+  };
 
   return (
     <MDBContainer fluid>
@@ -47,7 +65,9 @@ export default function LoginForm() {
 
               <hr className="mb-4" />
 
-              <MDBBtn size="lg">Sign In</MDBBtn>
+              <MDBBtn size="lg" onClick={handleLogin}>
+                Sign In
+              </MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
