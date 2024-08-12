@@ -5,54 +5,10 @@ import Orders from "../components/dispatcher/Orders";
 import Deliveries from "../components/dispatcher/Deliveries";
 import api from "../utils/api";
 
-const deliveries = [
-  {
-    id: 1,
-    driver_id: 1,
-    order_id: 1,
-    orders: [
-      {
-        id: 1,
-        buyer_firstname: "John",
-        buyer_lastname: "Doe",
-        address: "123 Elm St",
-        status: "Pending",
-        payment_method: "cash",
-        price: 100,
-      },
-      {
-        id: 2,
-        buyer_firstname: "Jane",
-        buyer_lastname: "Smith",
-        address: "456 Oak Ave",
-        status: "Failed",
-        payment_method: "card",
-        price: 50,
-      },
-      {
-        id: 3,
-        buyer_firstname: "Alice",
-        buyer_lastname: "Johnson",
-        address: "789 Pine Rd",
-        status: "Delivered",
-        payment_method: "cash",
-        price: 75,
-      },
-    ],
-    status: "Pending",
-  },
-  {
-    id: 2,
-    driver_id: 2,
-    order_id: 2,
-    orders: [],
-    status: "Pending",
-  },
-];
-
 export default function DispatcherPage() {
   const [drivers, setDrivers] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -65,8 +21,14 @@ export default function DispatcherPage() {
       setOrders(response.data);
     };
 
+    const fetchDeliveries = async () => {
+      const response = await api.get("dispatcher/deliveries/");
+      setDeliveries(response.data);
+    };
+
     fetchDrivers();
     fetchOrders();
+    fetchDeliveries();
   }, []);
 
   return (
