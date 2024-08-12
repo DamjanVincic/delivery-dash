@@ -25,4 +25,14 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
-export { login, logout };
+const isLoggedIn = () => {
+  return localStorage.getItem("token") !== null;
+};
+
+const getLoggedInUser = () => {
+  return localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+};
+
+export { login, logout, isLoggedIn, getLoggedInUser };
