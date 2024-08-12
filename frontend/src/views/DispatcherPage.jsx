@@ -1,13 +1,9 @@
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBTable,
-  MDBTableHead,
-} from "mdb-react-ui-kit";
+import { useState, useEffect } from "react";
+import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 import Drivers from "../components/dispatcher/Drivers";
 import Orders from "../components/dispatcher/Orders";
 import Deliveries from "../components/dispatcher/Deliveries";
+import api from "../utils/api";
 
 const orders = [
   {
@@ -29,23 +25,6 @@ const orders = [
     phone_number: "123-456-7890",
     price: 100.0,
     status: "Pending",
-  },
-];
-
-const drivers = [
-  {
-    id: 1,
-    first_name: "John",
-    last_name: "Doe",
-    email: "test",
-    phone_number: "123-456-7890",
-  },
-  {
-    id: 2,
-    first_name: "Jane",
-    last_name: "Doe",
-    email: "test",
-    phone_number: "123-456-7890",
   },
 ];
 
@@ -95,6 +74,16 @@ const deliveries = [
 ];
 
 export default function DispatcherPage() {
+  const [drivers, setDrivers] = useState([]);
+
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      const response = await api.get("dispatcher/users/drivers/");
+      setDrivers(response.data);
+    };
+    fetchDrivers();
+  }, []);
+
   return (
     <MDBContainer>
       <MDBRow between>
