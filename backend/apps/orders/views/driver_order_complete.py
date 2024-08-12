@@ -14,7 +14,7 @@ class DriverOrderComplete(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsDriver]
 
-    @extend_schema(responses={200: OrderSerializer, 400: None, 403: None, 404: None})
+    @extend_schema(responses={200: OrderSerializer, 400: None, 403: None, 404: None}, summary="Mark order as completed")
     def patch(self, request, pk):
         try:
             order = Order.objects.get(pk=pk)

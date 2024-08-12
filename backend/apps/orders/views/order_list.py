@@ -12,13 +12,17 @@ class OrderList(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(responses=OrderSerializer(many=True))
+    @extend_schema(responses=OrderSerializer(many=True), summary="Get all orders")
     def get(self, request):
         orders = Order.objects.all()
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
-    @extend_schema(request=OrderSerializer, responses={201: OrderSerializer, 400: None})
+    @extend_schema(
+        request=OrderSerializer,
+        responses={201: OrderSerializer, 400: None},
+        summary="Create order"
+    )
     def post(self, request):
         serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():

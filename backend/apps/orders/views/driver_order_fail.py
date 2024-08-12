@@ -14,7 +14,11 @@ class DriverOrderFail(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated, IsDriver]
 
-    @extend_schema(request=DriverOrderFailSerializer, responses={200: OrderSerializer, 400: None, 404: None})
+    @extend_schema(
+        request=DriverOrderFailSerializer,
+        responses={200: OrderSerializer, 400: None, 404: None},
+        summary="Mark order as failed"
+    )
     def patch(self, request, pk):
         try:
             order = Order.objects.get(pk=pk)

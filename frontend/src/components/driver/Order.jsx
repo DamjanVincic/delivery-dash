@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
+import { toast } from "react-toastify";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
-import { getOrderStatusBadgeColor } from "../../utils/common";
+import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
+import api from "../../utils/api";
 
 export default function Order({ order }) {
+  const [value, setValue] = useState(false);
+
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
   const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
 
@@ -16,6 +20,47 @@ export default function Order({ order }) {
     price,
     status,
   } = order;
+
+  const completeOrder = async () => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/complete/`);
+      if (response.status === 200) order.status = response.data.status;
+      setValue(!value);
+      toast.success("Order completed successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    }
+  };
+
+  const cancelOrder = async (comment) => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/fail/`, {
+        comment,
+      });
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.comment = response.data.comment;
+      }
+      setValue(!value);
+      toast.success("Order cancelled successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    }
+  };
 
   return (
     <>
@@ -32,7 +77,7 @@ export default function Order({ order }) {
         </td>
         <td>
           <MDBBadge color={getOrderStatusBadgeColor(status)} pill>
-            {status}
+            {formatString(status)}
           </MDBBadge>
         </td>
         <td>
@@ -44,7 +89,7 @@ export default function Order({ order }) {
             >
               <MDBIcon fas icon="info" />
             </MDBBtn>
-            <MDBBtn rounded color="success">
+            <MDBBtn rounded color="success" onClick={completeOrder}>
               <MDBIcon fas icon="check" />
             </MDBBtn>
             <MDBBtn
@@ -61,7 +106,7 @@ export default function Order({ order }) {
       <OrderCancelConfirmationModal
         show={showOrderCancelModal}
         onClose={() => setShowOrderCancelModal(false)}
-        onConfirm={() => console.log("Order cancelled")}
+        onConfirm={cancelOrder}
       />
 
       <OrderDetailModal

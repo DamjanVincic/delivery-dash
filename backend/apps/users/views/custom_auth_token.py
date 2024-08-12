@@ -3,11 +3,11 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from .serializers import AuthTokenResponseSerializer
+from ..serializers import AuthTokenResponseSerializer
 
 
 class CustomAuthToken(ObtainAuthToken):
-    @extend_schema(responses=AuthTokenResponseSerializer)
+    @extend_schema(responses=AuthTokenResponseSerializer, summary="Get user authentication token")
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,
                                            context={'request': request})
