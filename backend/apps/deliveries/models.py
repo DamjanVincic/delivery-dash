@@ -20,3 +20,6 @@ class Delivery(models.Model):
         blank=True,
     )
     status = models.CharField(choices=STATUS_CHOICES, default=IN_PROGRESS)
+
+    def __str__(self):
+        return f'{self.driver}\'s delivery'
