@@ -6,7 +6,7 @@ const getOrderStatusBadgeColor = (status) => {
       return "info";
     case "delivered":
       return "success";
-    case "failed":
+    case "cancelled":
       return "danger";
     default:
       return "secondary";
@@ -17,7 +17,7 @@ const getDeliveryStatusBadgeColor = (status) => {
   switch (status) {
     case "in_progress":
       return "warning";
-    case "finished":
+    case "completed":
       return "success";
     default:
       return "secondary";
