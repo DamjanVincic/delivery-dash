@@ -10,12 +10,12 @@ import Order from "./Order";
 import { getDeliveryStatusBadgeColor, formatString } from "../../utils/common";
 
 export default function Delivery({ delivery, showOrders, setShowOrders }) {
-  const { orders, status } = delivery;
+  const { orders, status, driver } = delivery;
 
   return (
     <>
       <tr>
-        <td>Driver</td>
+        <td>{driver.first_name + " " + driver.last_name}</td>
         <td>
           <MDBBadge color={getDeliveryStatusBadgeColor(status)} pill>
             {formatString(status)}
