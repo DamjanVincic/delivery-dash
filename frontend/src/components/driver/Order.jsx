@@ -30,7 +30,11 @@ export default function Order({ order }) {
   const completeOrder = async () => {
     try {
       const response = await api.patch(`driver/order/${order.id}/complete/`);
-      if (response.status === 200) order.status = response.data.status;
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.delivered_at = response.data.delivered_at;
+        order.late_time = response.data.late_time;
+      }
       setValue(!value);
       toast.success("Order completed successfully", {
         position: "bottom-right",
