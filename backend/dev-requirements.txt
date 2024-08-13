@@ -6,18 +6,35 @@
 #
 astroid==3.2.4
     # via pylint
+black==24.8.0
+    # via -r dev-requirements.in
+click==8.1.7
+    # via black
 colorama==0.4.6
-    # via pylint
+    # via
+    #   click
+    #   pylint
 dill==0.3.8
     # via pylint
 isort==5.13.2
-    # via pylint
+    # via
+    #   -r dev-requirements.in
+    #   pylint
 mccabe==0.7.0
     # via pylint
+mypy-extensions==1.0.0
+    # via black
+packaging==24.1
+    # via black
+pathspec==0.12.1
+    # via black
 platformdirs==4.2.2
-    # via pylint
+    # via
+    #   black
+    #   pylint
 pylint==3.2.6
     # via
+    #   -r dev-requirements.in
     #   pylint-django
     #   pylint-plugin-utils
 pylint-django==2.5.5
