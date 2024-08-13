@@ -12,7 +12,11 @@ class Delivery(models.Model):
         (FINISHED, 'Finished'),
     )
 
-    driver = models.OneToOneField(
-        User, related_name='delivery', on_delete=models.SET_NULL, null=True, blank=True
+    driver = models.ForeignKey(
+        User,
+        related_name='deliveries',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
     status = models.CharField(choices=STATUS_CHOICES, default=IN_PROGRESS)
