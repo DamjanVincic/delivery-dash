@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import OrderDetailModal from "../OrderDetailModal";
-import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  getOrderRowColor,
+  formatString,
+} from "../../utils/common";
 
 export default function Order({ order }) {
   const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
@@ -13,11 +17,12 @@ export default function Order({ order }) {
     address,
     price,
     status,
+    late_time,
   } = order;
 
   return (
     <>
-      <tr>
+      <tr className={getOrderRowColor(late_time)}>
         <td>{buyer_firstname + " " + buyer_lastname}</td>
         <td>{address}</td>
         <td>
@@ -33,6 +38,7 @@ export default function Order({ order }) {
             {formatString(status)}
           </MDBBadge>
         </td>
+        <td>{late_time ? `${late_time} minutes` : "/"}</td>
         <td>
           <div className="d-flex gap-2">
             <MDBBtn
