@@ -14,10 +14,10 @@ class DeliveryCreateUpdateSerializer(serializers.ModelSerializer):
         fields = ['driver', 'orders']
 
     def validate(self, data):
-        # driver = data['driver']
-        # if driver.delivery:
-        #     raise serializers.ValidationError('Driver already has a delivery')
-        # return data
+        driver = data.get('driver')
+        if driver.deliveries.filter(status=Delivery.IN_PROGRESS).exists():
+            raise serializers.ValidationError('Driver already has an active delivery')
+
         if len(set(order.deliver_at.date() for order in data.get('orders'))) > 1:
             raise serializers.ValidationError('Orders must have the same delivery date')
         return data
