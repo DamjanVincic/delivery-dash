@@ -36,9 +36,18 @@ const formatString = (str) => {
     .join(" ");
 };
 
+const parseDateTime = (date) => {
+  return new Date(date).toLocaleTimeString([], {
+    timeZone: "Europe/Belgrade",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 export {
   getOrderStatusBadgeColor,
   getDeliveryStatusBadgeColor,
   getOrderRowColor,
   formatString,
+  parseDateTime,
 };
