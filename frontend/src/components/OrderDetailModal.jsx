@@ -24,7 +24,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
             <MDBBtn className="btn-close" color="none" onClick={onClose} />
           </MDBModalHeader>
           <MDBModalBody>
-            <MDBTable bordered striped className="d-flex align-items-center">
+            <MDBTable bordered striped align="middle">
               <MDBTableHead>
                 <th />
                 <th />
@@ -32,13 +32,13 @@ export default function OrderDetailModal({ show, onClose, order }) {
               <MDBTableBody>
                 <tr>
                   <td>
-                    <strong>Customer name</strong>
+                    <strong>Customer Name</strong>
                   </td>
                   <td>{order.buyer_firstname + " " + order.buyer_lastname}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Deliver at</strong>
+                    <strong>Deliver At</strong>
                   </td>
                   <td>{order.deliver_at}</td>
                 </tr>
@@ -50,7 +50,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
                 </tr>
                 <tr>
                   <td>
-                    <strong>Phone number</strong>
+                    <strong>Phone Number</strong>
                   </td>
                   <td>{order.phone_number}</td>
                 </tr>
@@ -62,7 +62,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
                 </tr>
                 <tr>
                   <td>
-                    <strong>Payment method</strong>
+                    <strong>Payment Method</strong>
                   </td>
                   <td>{order.payment_method}</td>
                 </tr>
@@ -84,6 +84,20 @@ export default function OrderDetailModal({ show, onClose, order }) {
                     <strong>Comment</strong>
                   </td>
                   <td>{order.comment ? order.comment : "/"}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Delivered At</strong>
+                  </td>
+                  <td>{order.delivered_at ? order.delivered_at : "/"}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Late Time</strong>
+                  </td>
+                  <td>
+                    {order.late_time ? `${order.late_time} minutes` : "/"}
+                  </td>
                 </tr>
               </MDBTableBody>
             </MDBTable>
