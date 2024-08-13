@@ -5,11 +5,11 @@ from apps.users.models import User
 
 class Delivery(models.Model):
     IN_PROGRESS = 'in_progress'
-    FINISHED = 'finished'
+    COMPLETED = 'completed'
 
     STATUS_CHOICES = (
         (IN_PROGRESS, 'In Progress'),
-        (FINISHED, 'Finished'),
+        (COMPLETED, 'Completed'),
     )
 
     driver = models.ForeignKey(

@@ -47,7 +47,7 @@ class DriverOrderComplete(views.APIView):
         order.save()
 
         if not order.delivery.orders.filter(status=Order.PENDING).exists():
-            order.delivery.status = Delivery.FINISHED
+            order.delivery.status = Delivery.COMPLETED
             order.delivery.save()
 
         return Response(OrderSerializer(order).data)

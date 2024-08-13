@@ -46,12 +46,12 @@ class DriverOrderFail(views.APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        order.status = Order.FAILED
+        order.status = Order.CANCELLED
         order.comment = serializer.validated_data.get('comment')
         order.save()
 
         if not order.delivery.orders.filter(status=Order.PENDING).exists():
-            order.delivery.status = Delivery.FINISHED
+            order.delivery.status = Delivery.COMPLETED
             order.delivery.save()
 
         return Response(OrderSerializer(order).data)

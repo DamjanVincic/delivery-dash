@@ -9,7 +9,7 @@ class Order(models.Model):
 
     PENDING = 'pending'
     DELIVERED = 'delivered'
-    FAILED = 'failed'
+    CANCELLED = 'cancelled'
 
     PAYMENT_CHOICES = (
         (CASH, 'Cash'),
@@ -19,7 +19,7 @@ class Order(models.Model):
     STATUS_CHOICES = (
         (PENDING, 'Pending'),
         (DELIVERED, 'Delivered'),
-        (FAILED, 'Failed'),
+        (CANCELLED, 'Cancelled'),
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
