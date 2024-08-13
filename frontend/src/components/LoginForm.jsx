@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   MDBBtn,
   MDBContainer,
@@ -16,7 +17,6 @@ import { login } from "../utils/auth";
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -31,7 +31,11 @@ export default function LoginForm() {
         ? navigate("/dispatcher")
         : navigate("/driver");
     } else {
-      setError(response.error);
+      response.error &&
+        toast.error(response.error, {
+          position: "bottom-right",
+          autoClose: 2500,
+        });
     }
   };
 
@@ -47,7 +51,6 @@ export default function LoginForm() {
               <h2 className="fw-bold mb-2 text-center">Sign in</h2>
               <p className="mb-4">Enter your email and password.</p>
 
-              {error && <div className="text-danger mb-3">{error}</div>}
               <MDBValidation
                 onSubmit={handleLogin}
                 noValidate
