@@ -12,7 +12,11 @@ import {
   MDBTableHead,
   MDBTableBody,
 } from "mdb-react-ui-kit";
-import { getOrderStatusBadgeColor, formatString } from "../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  formatString,
+  parseDateTime,
+} from "../utils/common";
 
 export default function OrderDetailModal({ show, onClose, order }) {
   return (
@@ -40,7 +44,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
                   <td>
                     <strong>Deliver At</strong>
                   </td>
-                  <td>{order.deliver_at}</td>
+                  <td>{parseDateTime(order.deliver_at)}</td>
                 </tr>
                 <tr>
                   <td>
@@ -89,7 +93,11 @@ export default function OrderDetailModal({ show, onClose, order }) {
                   <td>
                     <strong>Delivered At</strong>
                   </td>
-                  <td>{order.delivered_at ? order.delivered_at : "/"}</td>
+                  <td>
+                    {order.delivered_at
+                      ? parseDateTime(order.delivered_at)
+                      : "/"}
+                  </td>
                 </tr>
                 <tr>
                   <td>
