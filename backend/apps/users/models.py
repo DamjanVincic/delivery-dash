@@ -18,5 +18,7 @@ class User(AbstractUser):
 
     first_name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
     last_name = models.CharField(max_length=30, validators=[MinLengthValidator(1)])
-    role = models.CharField(choices=ROLE_CHOICES, null=True)  # Temp for superuser creation
+    role = models.CharField(
+        choices=ROLE_CHOICES, null=True
+    )  # Temp for superuser creation
     phone_number = models.CharField(max_length=20, validators=[MinLengthValidator(10)])

@@ -21,7 +21,7 @@ class OrderList(views.APIView):
     @extend_schema(
         request=OrderSerializer,
         responses={201: OrderSerializer, 400: None},
-        summary="Create order"
+        summary="Create order",
     )
     def post(self, request):
         serializer = OrderSerializer(data=request.data)

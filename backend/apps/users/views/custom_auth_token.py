@@ -7,14 +7,16 @@ from ..serializers import AuthTokenResponseSerializer
 
 
 class CustomAuthToken(ObtainAuthToken):
-    @extend_schema(responses=AuthTokenResponseSerializer, summary="Get user authentication token")
+    @extend_schema(
+        responses=AuthTokenResponseSerializer, summary="Get user authentication token"
+    )
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
+        serializer = self.serializer_class(
+            data=request.data, context={'request': request}
+        )
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
-        return Response(AuthTokenResponseSerializer({
-            'token': token.key,
-            'user': user
-        }).data)
+        return Response(
+            AuthTokenResponseSerializer({'token': token.key, 'user': user}).data
+        )

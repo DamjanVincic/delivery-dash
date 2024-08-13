@@ -12,7 +12,9 @@ class OrderDetail(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(responses={200: OrderSerializer, 404: None}, summary="Get order details")
+    @extend_schema(
+        responses={200: OrderSerializer, 404: None}, summary="Get order details"
+    )
     def get(self, request, pk):
         try:
             order = Order.objects.get(pk=pk)
@@ -24,7 +26,7 @@ class OrderDetail(views.APIView):
     @extend_schema(
         request=OrderSerializer,
         responses={200: OrderSerializer, 400: None, 404: None},
-        summary="Update order"
+        summary="Update order",
     )
     def put(self, request, pk):
         try:

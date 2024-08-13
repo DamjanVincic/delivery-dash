@@ -14,4 +14,3 @@ class DispatcherDriverList(generics.ListAPIView):
 
     def get_queryset(self):
         return User.objects.filter(role=User.DRIVER)
-        

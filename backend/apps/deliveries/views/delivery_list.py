@@ -12,7 +12,9 @@ class DeliveryList(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(responses=DeliverySerializer(many=True), summary="Get all deliveries")
+    @extend_schema(
+        responses=DeliverySerializer(many=True), summary="Get all deliveries"
+    )
     def get(self, request):
         deliveries = Delivery.objects.all()
         serializer = DeliverySerializer(deliveries, many=True)
@@ -21,7 +23,7 @@ class DeliveryList(views.APIView):
     @extend_schema(
         request=DeliveryCreateUpdateSerializer,
         responses={201: DeliverySerializer, 400: None},
-        summary="Create delivery"
+        summary="Create delivery",
     )
     def post(self, request):
         serializer = DeliveryCreateUpdateSerializer(data=request.data)

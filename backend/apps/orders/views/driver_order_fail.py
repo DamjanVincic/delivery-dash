@@ -1,13 +1,12 @@
+from apps.users.permissions import IsDriver
 from drf_spectacular.utils import extend_schema
-from rest_framework import status
-from rest_framework import views
+from rest_framework import status, views
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from apps.users.permissions import IsDriver
 from ..models import Order
-from ..serializers import OrderSerializer, DriverOrderFailSerializer
+from ..serializers import DriverOrderFailSerializer, OrderSerializer
 
 
 class DriverOrderFail(views.APIView):
@@ -17,7 +16,7 @@ class DriverOrderFail(views.APIView):
     @extend_schema(
         request=DriverOrderFailSerializer,
         responses={200: OrderSerializer, 400: None, 404: None},
-        summary="Mark order as failed"
+        summary="Mark order as failed",
     )
     def patch(self, request, pk):
         try:
@@ -29,10 +28,21 @@ class DriverOrderFail(views.APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        if not order.delivery or not order.delivery.driver or order.delivery.driver != request.user:
-            return Response({'error': 'You are not the assigned driver'}, status=status.HTTP_403_FORBIDDEN)
+        if (
+            not order.delivery
+            or not order.delivery.driver
+            or order.delivery.driver != request.user
+        ):
+            return Response(
+                {'error': 'You are not the assigned driver'},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         if order.status != Order.PENDING:
-            return Response({'error': 'The order isn\'t pending'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {'error': 'The order isn\'t pending'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         order.status = Order.FAILED
         order.comment = serializer.validated_data.get('comment')
