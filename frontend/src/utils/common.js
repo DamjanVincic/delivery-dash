@@ -24,6 +24,10 @@ const getDeliveryStatusBadgeColor = (status) => {
   }
 };
 
+const getOrderRowColor = (late_time) => {
+  return late_time ? "table-danger" : "";
+};
+
 const formatString = (str) => {
   return str
     .toLowerCase()
@@ -32,4 +36,9 @@ const formatString = (str) => {
     .join(" ");
 };
 
-export { getOrderStatusBadgeColor, getDeliveryStatusBadgeColor, formatString };
+export {
+  getOrderStatusBadgeColor,
+  getDeliveryStatusBadgeColor,
+  getOrderRowColor,
+  formatString,
+};
