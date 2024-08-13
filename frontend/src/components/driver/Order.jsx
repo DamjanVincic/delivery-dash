@@ -3,7 +3,11 @@ import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import { toast } from "react-toastify";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
-import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  getOrderRowColor,
+  formatString,
+} from "../../utils/common";
 import api from "../../utils/api";
 
 export default function Order({ order }) {
@@ -19,6 +23,7 @@ export default function Order({ order }) {
     payment_method,
     price,
     status,
+    late_time,
   } = order;
 
   const completeOrder = async () => {
@@ -64,7 +69,7 @@ export default function Order({ order }) {
 
   return (
     <>
-      <tr>
+      <tr className={getOrderRowColor(late_time)}>
         <td>{buyer_firstname + " " + buyer_lastname}</td>
         <td>{address}</td>
         <td>
@@ -80,6 +85,7 @@ export default function Order({ order }) {
             {formatString(status)}
           </MDBBadge>
         </td>
+        <td>{late_time ? `${late_time} minutes` : "/"}</td>
         <td>
           <div className="d-flex gap-2">
             <MDBBtn

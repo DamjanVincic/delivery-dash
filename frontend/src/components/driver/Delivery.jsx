@@ -25,6 +25,7 @@ export default function Delivery({ delivery }) {
                     <th scope="col">Address</th>
                     <th scope="col">Price</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Late Time</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </MDBTableHead>
