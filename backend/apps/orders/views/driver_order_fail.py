@@ -5,6 +5,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from apps.deliveries.models import Delivery
+
 from ..models import Order
 from ..serializers import DriverOrderFailSerializer, OrderSerializer
 
@@ -47,4 +49,9 @@ class DriverOrderFail(views.APIView):
         order.status = Order.FAILED
         order.comment = serializer.validated_data.get('comment')
         order.save()
+
+        if not order.delivery.orders.filter(status=Order.PENDING).exists():
+            order.delivery.status = Delivery.FINISHED
+            order.delivery.save()
+
         return Response(OrderSerializer(order).data)

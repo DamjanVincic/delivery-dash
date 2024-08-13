@@ -1,10 +1,12 @@
-from apps.users.permissions import IsDriver
 from django.utils import timezone
 from drf_spectacular.utils import extend_schema
 from rest_framework import status, views
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+from apps.users.permissions import IsDriver
+from apps.deliveries.models import Delivery
 
 from ..models import Order
 from ..serializers import OrderSerializer
@@ -43,4 +45,9 @@ class DriverOrderComplete(views.APIView):
         order.status = Order.DELIVERED
         order.delivered_at = timezone.now()
         order.save()
+
+        if not order.delivery.orders.filter(status=Order.PENDING).exists():
+            order.delivery.status = Delivery.FINISHED
+            order.delivery.save()
+
         return Response(OrderSerializer(order).data)
