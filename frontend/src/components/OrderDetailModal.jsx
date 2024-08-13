@@ -16,6 +16,7 @@ import {
   getOrderStatusBadgeColor,
   formatString,
   parseDateTime,
+  parseMinutes,
 } from "../utils/common";
 
 export default function OrderDetailModal({ show, onClose, order }) {
@@ -111,7 +112,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
                   <td>
                     <strong>Late Time</strong>
                   </td>
-                  <td>{late_time ? `${late_time} minutes` : "/"}</td>
+                  <td>{late_time ? parseMinutes(late_time) : "/"}</td>
                 </tr>
               </MDBTableBody>
             </MDBTable>

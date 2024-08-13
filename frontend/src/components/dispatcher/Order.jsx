@@ -5,6 +5,7 @@ import {
   getOrderStatusBadgeColor,
   getOrderRowColor,
   formatString,
+  parseMinutes,
 } from "../../utils/common";
 
 export default function Order({ order }) {
@@ -38,7 +39,7 @@ export default function Order({ order }) {
             {formatString(status)}
           </MDBBadge>
         </td>
-        <td>{late_time ? `${late_time} minutes` : "/"}</td>
+        <td>{late_time ? parseMinutes(late_time) : "/"}</td>
         <td>
           <div className="d-flex gap-2">
             <MDBBtn
