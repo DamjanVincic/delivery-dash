@@ -12,7 +12,7 @@ const login = async (username, password) => {
     if (status === 400) {
       return {
         success: false,
-        error: data.non_field_errors[0],
+        error: data.non_field_errors ? data.non_field_errors[0] : "",
       };
     }
     console.log({ ...status, ...data });
