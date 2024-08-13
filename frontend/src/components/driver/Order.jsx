@@ -95,13 +95,19 @@ export default function Order({ order }) {
             >
               <MDBIcon fas icon="info" />
             </MDBBtn>
-            <MDBBtn rounded color="success" onClick={completeOrder}>
+            <MDBBtn
+              rounded
+              color="success"
+              onClick={completeOrder}
+              disabled={status !== "pending"}
+            >
               <MDBIcon fas icon="check" />
             </MDBBtn>
             <MDBBtn
               rounded
               color="danger"
               onClick={() => setShowOrderCancelModal(true)}
+              disabled={status !== "pending"}
             >
               <MDBIcon fas icon="times" />
             </MDBBtn>
