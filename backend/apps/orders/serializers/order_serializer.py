@@ -6,7 +6,6 @@ from ..models import Order
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    is_late = serializers.SerializerMethodField(read_only=True)
     late_time = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
@@ -25,7 +24,6 @@ class OrderSerializer(serializers.ModelSerializer):
             'delivery',
             'comment',
             'delivered_at',
-            'is_late',
             'late_time',
         ]
         read_only_fields = [
@@ -37,13 +35,13 @@ class OrderSerializer(serializers.ModelSerializer):
             'delivered_at',
         ]
 
-    def get_is_late(self, obj) -> serializers.BooleanField:
+    def _is_late(self, obj):
         return obj.delivered_at is not None and obj.delivered_at > obj.deliver_at
 
     @extend_schema_field(OpenApiTypes.INT)
     def get_late_time(self, obj):
         return (
             (obj.delivered_at - obj.deliver_at).seconds // 60
-            if obj.delivered_at is not None and obj.delivered_at > obj.deliver_at
+            if self._is_late(obj)
             else None
         )
