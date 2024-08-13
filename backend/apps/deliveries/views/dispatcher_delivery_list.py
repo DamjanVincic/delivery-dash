@@ -14,4 +14,6 @@ class DispatcherDeliveryList(generics.ListAPIView):
     permission_classes = [IsAuthenticated, IsDispatcher]
 
     def get_queryset(self):
-        return Delivery.objects.filter(orders__deliver_at__date=timezone.now().date())
+        return Delivery.objects.filter(
+            orders__deliver_at__date=timezone.now().date()
+        ).distinct()
