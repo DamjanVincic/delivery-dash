@@ -44,10 +44,17 @@ const parseDateTime = (date) => {
   });
 };
 
+const parseMinutes = (minutes) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return hours !== 0 ? `${hours}h ${mins}m` : `${mins}m`;
+};
+
 export {
   getOrderStatusBadgeColor,
   getDeliveryStatusBadgeColor,
   getOrderRowColor,
   formatString,
   parseDateTime,
+  parseMinutes,
 };
