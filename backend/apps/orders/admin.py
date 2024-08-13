@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from .forms import OrderAddForm, OrderChangeForm
 from .models import Order
 
 
@@ -17,6 +18,11 @@ class OrderAdmin(admin.ModelAdmin):
         'delivery',
     ]
     list_filter = ['status', 'delivery', 'payment_method']
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            return OrderChangeForm
+        return OrderAddForm
 
     def details(self, obj):
         return f'Order #{obj.id}'
