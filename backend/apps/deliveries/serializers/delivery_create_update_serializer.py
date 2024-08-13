@@ -15,6 +15,10 @@ class DeliveryCreateUpdateSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         driver = data.get('driver')
+
+        if driver.role != User.DRIVER:
+            raise serializers.ValidationError('User is not a driver')
+
         if driver.deliveries.filter(status=Delivery.IN_PROGRESS).exists():
             raise serializers.ValidationError('Driver already has an active delivery')
 
