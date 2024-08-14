@@ -23,6 +23,7 @@ class DriverFilter(admin.SimpleListFilter):
 class DeliveryAdmin(admin.ModelAdmin):
     list_display = ['delivery', 'driver', 'status']
     list_filter = ['status', DriverFilter]
+    search_fields = ['driver__username']
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:

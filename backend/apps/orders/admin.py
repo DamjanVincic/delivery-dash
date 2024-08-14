@@ -36,6 +36,7 @@ class OrderAdmin(admin.ModelAdmin):
         'delivery',
     ]
     list_filter = ['status', 'payment_method', CustomerFilter, 'delivery']
+    search_fields = ['buyer_firstname', 'buyer_lastname', 'address', 'phone_number']
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
