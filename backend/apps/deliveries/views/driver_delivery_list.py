@@ -13,4 +13,6 @@ class DriverDeliveryList(generics.ListAPIView):
     permission_classes = [IsAuthenticated, IsDriver]
 
     def get_queryset(self):
-        return Delivery.objects.filter(driver=self.request.user)
+        return Delivery.objects.filter(
+            driver=self.request.user, status=Delivery.IN_PROGRESS
+        )

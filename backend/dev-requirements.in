@@ -1,0 +1,5 @@
+-c requirements.txt
+pylint
+pylint-django
+black
+isort

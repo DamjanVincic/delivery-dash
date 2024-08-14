@@ -32,7 +32,7 @@ export default function DispatcherPage() {
   }, []);
 
   return (
-    <MDBContainer>
+    <MDBContainer fluid>
       <MDBRow between>
         <MDBCol size="6">
           <Drivers drivers={drivers} />

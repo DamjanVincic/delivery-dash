@@ -3,7 +3,12 @@ import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
 import { toast } from "react-toastify";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
-import { getOrderStatusBadgeColor, formatString } from "../../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  getOrderRowColor,
+  formatString,
+  parseMinutes,
+} from "../../utils/common";
 import api from "../../utils/api";
 
 export default function Order({ order }) {
@@ -19,12 +24,17 @@ export default function Order({ order }) {
     payment_method,
     price,
     status,
+    late_time,
   } = order;
 
   const completeOrder = async () => {
     try {
       const response = await api.patch(`driver/order/${order.id}/complete/`);
-      if (response.status === 200) order.status = response.data.status;
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.delivered_at = response.data.delivered_at;
+        order.late_time = response.data.late_time;
+      }
       setValue(!value);
       toast.success("Order completed successfully", {
         position: "bottom-right",
@@ -64,7 +74,7 @@ export default function Order({ order }) {
 
   return (
     <>
-      <tr>
+      <tr className={getOrderRowColor(late_time)}>
         <td>{buyer_firstname + " " + buyer_lastname}</td>
         <td>{address}</td>
         <td>
@@ -80,6 +90,7 @@ export default function Order({ order }) {
             {formatString(status)}
           </MDBBadge>
         </td>
+        <td>{late_time ? parseMinutes(late_time) : "/"}</td>
         <td>
           <div className="d-flex gap-2">
             <MDBBtn
@@ -89,13 +100,19 @@ export default function Order({ order }) {
             >
               <MDBIcon fas icon="info" />
             </MDBBtn>
-            <MDBBtn rounded color="success" onClick={completeOrder}>
+            <MDBBtn
+              rounded
+              color="success"
+              onClick={completeOrder}
+              disabled={status !== "pending"}
+            >
               <MDBIcon fas icon="check" />
             </MDBBtn>
             <MDBBtn
               rounded
               color="danger"
               onClick={() => setShowOrderCancelModal(true)}
+              disabled={status !== "pending"}
             >
               <MDBIcon fas icon="times" />
             </MDBBtn>

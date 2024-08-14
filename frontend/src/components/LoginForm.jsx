@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   MDBBtn,
   MDBContainer,
@@ -8,13 +9,14 @@ import {
   MDBRow,
   MDBCol,
   MDBInput,
+  MDBValidation,
+  MDBValidationItem,
 } from "mdb-react-ui-kit";
 import { login } from "../utils/auth";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,7 +31,11 @@ export default function LoginForm() {
         ? navigate("/dispatcher")
         : navigate("/driver");
     } else {
-      setError(response.error);
+      response.error &&
+        toast.error(response.error, {
+          position: "bottom-right",
+          autoClose: 2500,
+        });
     }
   };
 
@@ -43,33 +49,45 @@ export default function LoginForm() {
           >
             <MDBCardBody className="p-5 w-100 d-flex flex-column">
               <h2 className="fw-bold mb-2 text-center">Sign in</h2>
-              <p className="mb-3">Enter your email and password.</p>
+              <p className="mb-4">Enter your email and password.</p>
 
-              {error && <div className="danger">{error}</div>}
-              <form>
-                <MDBInput
-                  wrapperClass="mb-4 w-100"
-                  label="Username"
-                  type="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  size="lg"
-                />
-                <MDBInput
-                  wrapperClass="mb-4 w-100"
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  size="lg"
-                />
+              <MDBValidation
+                onSubmit={handleLogin}
+                noValidate
+                className="row g-3"
+              >
+                <MDBValidationItem feedback="Username cannot be empty" invalid>
+                  <MDBInput
+                    wrapperClass="mb-4 w-100"
+                    label="Username"
+                    type="username"
+                    value={username}
+                    required
+                    onChange={(e) => setUsername(e.target.value)}
+                    size="lg"
+                    name="test"
+                    id="test"
+                  />
+                </MDBValidationItem>
+
+                <MDBValidationItem feedback="Password cannot be empty" invalid>
+                  <MDBInput
+                    wrapperClass="mb-4 w-100"
+                    label="Password"
+                    type="password"
+                    value={password}
+                    required
+                    onChange={(e) => setPassword(e.target.value)}
+                    size="lg"
+                  />
+                </MDBValidationItem>
 
                 <hr className="mb-4" />
 
-                <MDBBtn size="lg" onClick={handleLogin} type="submit">
+                <MDBBtn size="lg" type="submit">
                   Sign In
                 </MDBBtn>
-              </form>
+              </MDBValidation>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

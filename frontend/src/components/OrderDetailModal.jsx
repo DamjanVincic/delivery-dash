@@ -12,19 +12,39 @@ import {
   MDBTableHead,
   MDBTableBody,
 } from "mdb-react-ui-kit";
-import { getOrderStatusBadgeColor, formatString } from "../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  formatString,
+  parseDateTime,
+  parseMinutes,
+} from "../utils/common";
 
 export default function OrderDetailModal({ show, onClose, order }) {
+  const {
+    id,
+    buyer_firstname,
+    buyer_lastname,
+    deliver_at,
+    address,
+    phone_number,
+    price,
+    payment_method,
+    status,
+    comment,
+    delivered_at,
+    late_time,
+  } = order;
+
   return (
     <MDBModal open={show} onClose={onClose} tabIndex="-1">
       <MDBModalDialog>
         <MDBModalContent>
           <MDBModalHeader>
-            <MDBModalTitle>Order #{order.id}</MDBModalTitle>
+            <MDBModalTitle>Order #{id}</MDBModalTitle>
             <MDBBtn className="btn-close" color="none" onClick={onClose} />
           </MDBModalHeader>
           <MDBModalBody>
-            <MDBTable bordered striped className="d-flex align-items-center">
+            <MDBTable bordered striped align="middle">
               <MDBTableHead>
                 <th />
                 <th />
@@ -32,50 +52,47 @@ export default function OrderDetailModal({ show, onClose, order }) {
               <MDBTableBody>
                 <tr>
                   <td>
-                    <strong>Customer name</strong>
+                    <strong>Customer Name</strong>
                   </td>
-                  <td>{order.buyer_firstname + " " + order.buyer_lastname}</td>
+                  <td>{buyer_firstname + " " + buyer_lastname}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Deliver at</strong>
+                    <strong>Deliver At</strong>
                   </td>
-                  <td>{order.deliver_at}</td>
+                  <td>{parseDateTime(deliver_at)}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Address</strong>
                   </td>
-                  <td>{order.address}</td>
+                  <td>{address}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Phone number</strong>
+                    <strong>Phone Number</strong>
                   </td>
-                  <td>{order.phone_number}</td>
+                  <td>{phone_number}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Price</strong>
                   </td>
-                  <td>{order.price}</td>
+                  <td>{price}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Payment method</strong>
+                    <strong>Payment Method</strong>
                   </td>
-                  <td>{order.payment_method}</td>
+                  <td>{payment_method}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Status</strong>
                   </td>
                   <td>
-                    <MDBBadge
-                      color={getOrderStatusBadgeColor(order.status)}
-                      pill
-                    >
-                      {formatString(order.status)}
+                    <MDBBadge color={getOrderStatusBadgeColor(status)} pill>
+                      {formatString(status)}
                     </MDBBadge>
                   </td>
                 </tr>
@@ -83,7 +100,19 @@ export default function OrderDetailModal({ show, onClose, order }) {
                   <td>
                     <strong>Comment</strong>
                   </td>
-                  <td>{order.comment ? order.comment : "/"}</td>
+                  <td>{comment ? comment : "/"}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Delivered At</strong>
+                  </td>
+                  <td>{delivered_at ? parseDateTime(delivered_at) : "/"}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Late Time</strong>
+                  </td>
+                  <td>{late_time ? parseMinutes(late_time) : "/"}</td>
                 </tr>
               </MDBTableBody>
             </MDBTable>

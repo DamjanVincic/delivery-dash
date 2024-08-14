@@ -12,7 +12,9 @@ class DeliveryDetail(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(responses={200: DeliverySerializer, 404: None}, summary="Get delivery details")
+    @extend_schema(
+        responses={200: DeliverySerializer, 404: None}, summary="Get delivery details"
+    )
     def get(self, request, pk):
         try:
             delivery = Delivery.objects.get(pk=pk)
@@ -23,7 +25,7 @@ class DeliveryDetail(views.APIView):
     @extend_schema(
         request=DeliveryCreateUpdateSerializer,
         responses={200: DeliverySerializer, 404: None, 400: None},
-        summary="Update delivery"
+        summary="Update delivery",
     )
     def put(self, request, pk):
         try:
