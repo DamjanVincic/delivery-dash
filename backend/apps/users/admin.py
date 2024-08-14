@@ -6,6 +6,7 @@ from .models import User
 
 class CustomUserAdmin(UserAdmin):
     model = User
+
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
         (
@@ -41,6 +42,17 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+
+    list_display = (
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+        'role',
+        'phone_number',
+    )
+    list_filter = ('role', 'is_staff', 'is_superuser', 'is_active')
+    search_fields = ('username', 'email', 'first_name', 'last_name', 'phone_number')
 
 
 admin.site.register(User, CustomUserAdmin)
