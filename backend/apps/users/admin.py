@@ -1,11 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
+from .forms import UserAddForm, UserUpdateForm
 from .models import User
 
 
 class CustomUserAdmin(UserAdmin):
     model = User
+    form = UserUpdateForm
+    add_form = UserAddForm
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
