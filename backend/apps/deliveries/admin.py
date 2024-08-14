@@ -4,12 +4,6 @@ from apps.users.models import User
 
 from .models import Delivery
 from .forms import DeliveryAddForm, DeliveryChangeForm
-from ..orders.models import Order
-
-
-class OrderInLine(admin.StackedInline):
-    model = Order
-    extra = 0
 
 
 class DriverFilter(admin.SimpleListFilter):
@@ -27,7 +21,6 @@ class DriverFilter(admin.SimpleListFilter):
 
 
 class DeliveryAdmin(admin.ModelAdmin):
-    inlines = [OrderInLine]
     list_display = ['delivery', 'driver', 'status']
     list_filter = ['status', DriverFilter]
 
