@@ -15,7 +15,7 @@ export default function Delivery({ delivery, showOrders, setShowOrders }) {
   return (
     <>
       <tr>
-        <td>{driver.first_name + " " + driver.last_name}</td>
+        <td>{driver ? driver.first_name + " " + driver.last_name : "/"}</td>
         <td>
           <MDBBadge color={getDeliveryStatusBadgeColor(status)} pill>
             {formatString(status)}
