@@ -10,7 +10,14 @@ export default function DriverPage() {
       const response = await api.get("driver/deliveries/");
       setDelivery(response.data.length !== 0 ? response.data[0] : null);
     };
+
     fetchDelivery();
+
+    const interval = setInterval(() => {
+      fetchDelivery();
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return <Delivery delivery={delivery} />;

@@ -26,9 +26,17 @@ export default function DispatcherPage() {
       setDeliveries(response.data);
     };
 
-    fetchDrivers();
-    fetchOrders();
-    fetchDeliveries();
+    const fetchData = async () => {
+      await Promise.all([fetchDrivers(), fetchOrders(), fetchDeliveries()]);
+    };
+
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
