@@ -4,6 +4,24 @@ from .forms import OrderAddForm, OrderChangeForm
 from .models import Order
 
 
+class CustomerFilter(admin.SimpleListFilter):
+    title = 'Customer'
+    parameter_name = 'customer'
+
+    def lookups(self, request, model_admin):
+        customers = set(
+            f'{order.buyer_firstname} {order.buyer_lastname}'
+            for order in Order.objects.all()
+        )
+        return [(customer, customer) for customer in customers]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            first_name, last_name = self.value().split(' ')
+            return queryset.filter(buyer_firstname=first_name, buyer_lastname=last_name)
+        return queryset
+
+
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         'details',
@@ -17,7 +35,7 @@ class OrderAdmin(admin.ModelAdmin):
         'status',
         'delivery',
     ]
-    list_filter = ['status', 'delivery', 'payment_method']
+    list_filter = ['status', 'delivery', 'payment_method', CustomerFilter]
 
     def get_form(self, request, obj=None, **kwargs):
         if obj:
