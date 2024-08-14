@@ -18,3 +18,8 @@ class OrderChangeForm(forms.ModelForm):
             'status',
             'comment',
         ]
+
+    deliver_at = forms.DateTimeField(
+        input_formats=['%Y-%m-%d %H:%M'],
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+    )
