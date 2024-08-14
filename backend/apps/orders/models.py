@@ -40,3 +40,6 @@ class Order(models.Model):
     )
     comment = models.CharField(max_length=255, null=True, blank=True)
     delivered_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f'Order #{self.pk}'
