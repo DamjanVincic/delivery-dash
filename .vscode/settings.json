@@ -21,10 +21,9 @@
   },
   "isort.args": ["--profile", "black"],
   "pylint.args": [
-    "--load-plugins",
-    "pylint_django",
-    "--django-settings-module",
-    "delivery_dash.settings"
+    "--disable=C0111",
+    "--load-plugins=pylint_django",
+    "--django-settings-module=delivery_dash.settings"
   ],
   "pylint.cwd": "${fileDirname}",
   "black-formatter.args": ["-S"]
