@@ -23,14 +23,16 @@ export default function DriverPage() {
 
   return (
     <div
-      id="bg-img"
       className="p-5 text-center bg-image img-fluid"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         height: "100vh",
       }}
     >
-      <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+      <div
+        className="mask"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", overflow: "auto" }}
+      >
         <div className="d-flex justify-content-center align-items-center mt-5">
           <Delivery delivery={delivery} />
         </div>
