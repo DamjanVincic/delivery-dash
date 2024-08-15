@@ -1,7 +1,6 @@
-from django import forms
-
 from apps.orders.models import Order
 from apps.users.models import User
+from django import forms
 
 from ..models import Delivery
 
@@ -20,6 +19,12 @@ class DeliveryAddForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=False,
     )
+
+    def clean_orders(self):
+        orders = self.cleaned_data['orders']
+        if len(set(order.deliver_at.date() for order in orders)) > 1:
+            raise forms.ValidationError('Orders must have the same delivery date')
+        return orders
 
     def save(self, *args, **kwargs):
         delivery = super().save(commit=False)

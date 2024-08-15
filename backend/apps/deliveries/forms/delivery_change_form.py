@@ -1,8 +1,7 @@
-from django import forms
-from django.db.models import Q
-
 from apps.orders.models import Order
 from apps.users.models import User
+from django import forms
+from django.db.models import Q
 
 from ..models import Delivery
 
@@ -34,3 +33,9 @@ class DeliveryChangeForm(forms.ModelForm):
         self.fields['orders'].initial.update(delivery=None)
         self.cleaned_data['orders'].update(delivery=delivery)
         return delivery
+
+    def clean_orders(self):
+        orders = self.cleaned_data['orders']
+        if len(set(order.deliver_at.date() for order in orders)) > 1:
+            raise forms.ValidationError('Orders must have the same delivery date')
+        return orders

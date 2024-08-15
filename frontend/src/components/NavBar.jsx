@@ -11,11 +11,11 @@ import {
   MDBDropdownItem,
 } from "mdb-react-ui-kit";
 import icon from "../assets/logo.svg";
-import { logout, isLoggedIn, getLoggedInUser } from "../utils/auth";
+import { useAuth } from "../hooks/useAuth";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const user = getLoggedInUser();
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
@@ -31,7 +31,7 @@ export default function NavBar() {
               <img src={icon} height="30" alt="" loading="lazy" />
               Delivery Dash
             </MDBNavbarBrand>
-            {isLoggedIn() && (
+            {user && (
               <MDBNavbarNav right fullWidth={false}>
                 <MDBNavbarItem>
                   <MDBDropdown>

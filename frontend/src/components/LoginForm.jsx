@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
@@ -12,32 +12,42 @@ import {
   MDBValidation,
   MDBValidationItem,
 } from "mdb-react-ui-kit";
-import { login } from "../utils/auth";
+import { useAuth } from "../hooks/useAuth";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { login, user, error } = useAuth();
+
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    return username.length > 0 && password.length > 0;
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await login(username, password);
-    const { success, token, user } = response;
-    if (success) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    if (!validateForm()) return;
+    await login(username, password);
+  };
+
+  useEffect(() => {
+    if (user) {
       user.role === "dispatcher"
         ? navigate("/dispatcher")
         : navigate("/driver");
-    } else {
-      response.error &&
-        toast.error(response.error, {
-          position: "bottom-right",
-          autoClose: 2500,
-        });
     }
-  };
+  }, [user, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    }
+  }, [error]);
 
   return (
     <MDBContainer fluid>

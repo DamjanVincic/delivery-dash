@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
+import backgroundImage from "../assets/background.jpg";
 import Drivers from "../components/dispatcher/Drivers";
 import Orders from "../components/dispatcher/Orders";
 import Deliveries from "../components/dispatcher/Deliveries";
@@ -40,20 +41,35 @@ export default function DispatcherPage() {
   }, []);
 
   return (
-    <MDBContainer fluid>
-      <MDBRow between>
-        <MDBCol size="6">
-          <Drivers drivers={drivers} />
-        </MDBCol>
-        <MDBCol size="6">
-          <Orders orders={orders} />
-        </MDBCol>
-      </MDBRow>
-      <MDBRow center>
-        <MDBCol size="12">
-          <Deliveries deliveries={deliveries} />
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+    <div
+      className="p-5 text-center bg-image img-fluid"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        height: "100vh",
+      }}
+    >
+      <div
+        className="mask"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", overflow: "auto" }}
+      >
+        <div className="d-flex justify-content-center align-items-center mt-5">
+          <MDBContainer fluid>
+            <MDBRow between>
+              <MDBCol size="6">
+                <Drivers drivers={drivers} />
+              </MDBCol>
+              <MDBCol size="6">
+                <Orders orders={orders} />
+              </MDBCol>
+            </MDBRow>
+            <MDBRow center>
+              <MDBCol size="12">
+                <Deliveries deliveries={deliveries} />
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </div>
+      </div>
+    </div>
   );
 }
