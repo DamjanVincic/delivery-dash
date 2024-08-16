@@ -1,115 +1,75 @@
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBTable,
-  MDBTableHead,
-} from "mdb-react-ui-kit";
+import { useState, useEffect } from "react";
+import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
+import backgroundImage from "../assets/background.jpg";
 import Drivers from "../components/dispatcher/Drivers";
 import Orders from "../components/dispatcher/Orders";
 import Deliveries from "../components/dispatcher/Deliveries";
-
-const orders = [
-  {
-    id: 1,
-    buyer_firstname: "John",
-    buyer_lastname: "Doe",
-    deliver_at: "2021-12-31",
-    address: "123 Main St",
-    phone_number: "123-456-7890",
-    price: 100.0,
-    status: "Pending",
-  },
-  {
-    id: 2,
-    buyer_firstname: "Jane",
-    buyer_lastname: "Doe",
-    deliver_at: "2021-12-31",
-    address: "123 Main St",
-    phone_number: "123-456-7890",
-    price: 100.0,
-    status: "Pending",
-  },
-];
-
-const drivers = [
-  {
-    id: 1,
-    first_name: "John",
-    last_name: "Doe",
-    email: "test",
-    phone_number: "123-456-7890",
-  },
-  {
-    id: 2,
-    first_name: "Jane",
-    last_name: "Doe",
-    email: "test",
-    phone_number: "123-456-7890",
-  },
-];
-
-const deliveries = [
-  {
-    id: 1,
-    driver_id: 1,
-    order_id: 1,
-    orders: [
-      {
-        id: 1,
-        buyer_firstname: "John",
-        buyer_lastname: "Doe",
-        address: "123 Elm St",
-        status: "Pending",
-        payment_method: "cash",
-        price: 100,
-      },
-      {
-        id: 2,
-        buyer_firstname: "Jane",
-        buyer_lastname: "Smith",
-        address: "456 Oak Ave",
-        status: "Failed",
-        payment_method: "card",
-        price: 50,
-      },
-      {
-        id: 3,
-        buyer_firstname: "Alice",
-        buyer_lastname: "Johnson",
-        address: "789 Pine Rd",
-        status: "Delivered",
-        payment_method: "cash",
-        price: 75,
-      },
-    ],
-    status: "Pending",
-  },
-  {
-    id: 2,
-    driver_id: 2,
-    order_id: 2,
-    orders: [],
-    status: "Pending",
-  },
-];
+import api from "../utils/api";
 
 export default function DispatcherPage() {
+  const [drivers, setDrivers] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [deliveries, setDeliveries] = useState([]);
+
+  useEffect(() => {
+    const fetchDrivers = async () => {
+      const response = await api.get("dispatcher/users/drivers/");
+      setDrivers(response.data);
+    };
+
+    const fetchOrders = async () => {
+      const response = await api.get("dispatcher/orders/");
+      setOrders(response.data);
+    };
+
+    const fetchDeliveries = async () => {
+      const response = await api.get("dispatcher/deliveries/");
+      setDeliveries(response.data);
+    };
+
+    const fetchData = async () => {
+      await Promise.all([fetchDrivers(), fetchOrders(), fetchDeliveries()]);
+    };
+
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <MDBContainer>
-      <MDBRow between>
-        <MDBCol size="6">
-          <Drivers drivers={drivers} />
-        </MDBCol>
-        <MDBCol size="6">
-          <Orders orders={orders} />
-        </MDBCol>
-      </MDBRow>
-      <MDBRow center>
-        <MDBCol size="12">
-          <Deliveries deliveries={deliveries} />
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+    <div
+      className="p-5 text-center bg-image img-fluid"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        height: "100vh",
+      }}
+    >
+      <div
+        className="mask"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.7)", overflow: "auto" }}
+      >
+        <div className="d-flex justify-content-center align-items-center mt-5">
+          <MDBContainer fluid>
+            <MDBRow between>
+              <MDBCol size="6">
+                <Drivers drivers={drivers} />
+              </MDBCol>
+              <MDBCol size="6">
+                <Orders orders={orders} />
+              </MDBCol>
+            </MDBRow>
+            <MDBRow center>
+              <MDBCol size="12">
+                <Deliveries deliveries={deliveries} />
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </div>
+      </div>
+    </div>
   );
 }

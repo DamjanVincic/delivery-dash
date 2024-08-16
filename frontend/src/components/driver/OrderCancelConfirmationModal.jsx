@@ -9,6 +9,8 @@ import {
   MDBModalFooter,
   MDBBtn,
   MDBInput,
+  MDBValidation,
+  MDBValidationItem,
 } from "mdb-react-ui-kit";
 
 export default function CancelConfirmationModal({ show, onClose, onConfirm }) {
@@ -18,7 +20,12 @@ export default function CancelConfirmationModal({ show, onClose, onConfirm }) {
     setComment(event.target.value);
   };
 
+  const validateComment = () => {
+    return comment.length > 0;
+  };
+
   const handleConfirm = () => {
+    if (!validateComment()) return;
     onConfirm(comment);
     setComment("");
     onClose();
@@ -32,27 +39,32 @@ export default function CancelConfirmationModal({ show, onClose, onConfirm }) {
             <MDBModalTitle>Confirm Cancellation</MDBModalTitle>
             <MDBBtn className="btn-close" color="none" onClick={onClose} />
           </MDBModalHeader>
-          <MDBModalBody>
-            <p>
-              Are you sure you want to cancel this order? Please provide a
-              comment for the cancellation.
-            </p>
-            <MDBInput
-              type="textarea"
-              rows="3"
-              label="Comment"
-              value={comment}
-              onChange={handleCommentChange}
-            />
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={onClose}>
-              Cancel
-            </MDBBtn>
-            <MDBBtn color="danger" onClick={handleConfirm}>
-              Confirm
-            </MDBBtn>
-          </MDBModalFooter>
+          <MDBValidation onSubmit={handleConfirm} noValidate>
+            <MDBModalBody>
+              <p>
+                Are you sure you want to cancel this order? Please provide a
+                comment for the cancellation.
+              </p>
+              <MDBValidationItem feedback="Comment cannot be empty" invalid>
+                <MDBInput
+                  type="textarea"
+                  rows="3"
+                  label="Comment"
+                  value={comment}
+                  onChange={handleCommentChange}
+                  required
+                />
+              </MDBValidationItem>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={onClose}>
+                Cancel
+              </MDBBtn>
+              <MDBBtn color="danger" type="submit">
+                Confirm
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBValidation>
         </MDBModalContent>
       </MDBModalDialog>
     </MDBModal>

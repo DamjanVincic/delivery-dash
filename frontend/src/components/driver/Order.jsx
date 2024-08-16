@@ -1,10 +1,19 @@
 import { useState } from "react";
 import { MDBBadge, MDBBtn, MDBIcon } from "mdb-react-ui-kit";
+import { toast } from "react-toastify";
 import OrderCancelConfirmationModal from "./OrderCancelConfirmationModal";
 import OrderDetailModal from "../OrderDetailModal";
-import { getOrderStatusBadgeColor } from "../../utils/common";
+import {
+  getOrderStatusBadgeColor,
+  getOrderRowColor,
+  formatString,
+  parseMinutes,
+} from "../../utils/common";
+import api from "../../utils/api";
 
 export default function Order({ order }) {
+  const [value, setValue] = useState(false);
+
   const [showOrderCancelModal, setShowOrderCancelModal] = useState(false);
   const [showOrderDetailModal, setShowOrderDetailModal] = useState(false);
 
@@ -15,11 +24,57 @@ export default function Order({ order }) {
     payment_method,
     price,
     status,
+    late_time,
   } = order;
+
+  const completeOrder = async () => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/complete/`);
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.delivered_at = response.data.delivered_at;
+        order.late_time = response.data.late_time;
+      }
+      setValue(!value);
+      toast.success("Order completed successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    }
+  };
+
+  const cancelOrder = async (comment) => {
+    try {
+      const response = await api.patch(`driver/order/${order.id}/fail/`, {
+        comment,
+      });
+      if (response.status === 200) {
+        order.status = response.data.status;
+        order.comment = response.data.comment;
+      }
+      setValue(!value);
+      toast.success("Order cancelled successfully", {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    } catch (error) {
+      console.log(error.response);
+      toast.error(error.response.data.error, {
+        position: "bottom-right",
+        autoClose: 2500,
+      });
+    }
+  };
 
   return (
     <>
-      <tr>
+      <tr className={getOrderRowColor(late_time)}>
         <td>{buyer_firstname + " " + buyer_lastname}</td>
         <td>{address}</td>
         <td>
@@ -32,9 +87,10 @@ export default function Order({ order }) {
         </td>
         <td>
           <MDBBadge color={getOrderStatusBadgeColor(status)} pill>
-            {status}
+            {formatString(status)}
           </MDBBadge>
         </td>
+        <td>{late_time ? parseMinutes(late_time) : "/"}</td>
         <td>
           <div className="d-flex gap-2">
             <MDBBtn
@@ -44,13 +100,19 @@ export default function Order({ order }) {
             >
               <MDBIcon fas icon="info" />
             </MDBBtn>
-            <MDBBtn rounded color="success">
+            <MDBBtn
+              rounded
+              color="success"
+              onClick={completeOrder}
+              disabled={status !== "pending"}
+            >
               <MDBIcon fas icon="check" />
             </MDBBtn>
             <MDBBtn
               rounded
               color="danger"
               onClick={() => setShowOrderCancelModal(true)}
+              disabled={status !== "pending"}
             >
               <MDBIcon fas icon="times" />
             </MDBBtn>
@@ -61,7 +123,7 @@ export default function Order({ order }) {
       <OrderCancelConfirmationModal
         show={showOrderCancelModal}
         onClose={() => setShowOrderCancelModal(false)}
-        onConfirm={() => console.log("Order cancelled")}
+        onConfirm={cancelOrder}
       />
 
       <OrderDetailModal

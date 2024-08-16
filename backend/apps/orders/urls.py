@@ -1,6 +1,12 @@
 from django.urls import path
 
-from .views import OrderList, OrderDetail, DriverOrderComplete, DriverOrderFail, DispatcherOrderList
+from .views import (
+    OrderList,
+    OrderDetail,
+    DriverOrderComplete,
+    DriverOrderFail,
+    DispatcherOrderList,
+)
 
 driver_urlpatterns = [
     path('<int:pk>/complete/', DriverOrderComplete.as_view()),
