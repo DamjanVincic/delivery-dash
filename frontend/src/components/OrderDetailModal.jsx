@@ -37,7 +37,7 @@ export default function OrderDetailModal({ show, onClose, order }) {
 
   return (
     <MDBModal open={show} onClose={onClose} tabIndex="-1">
-      <MDBModalDialog>
+      <MDBModalDialog scrollable>
         <MDBModalContent>
           <MDBModalHeader>
             <MDBModalTitle>Order #{id}</MDBModalTitle>
