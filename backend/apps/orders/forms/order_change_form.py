@@ -42,3 +42,14 @@ class OrderChangeForm(forms.ModelForm):
         if price < 0:
             raise forms.ValidationError('Price cannot be negative.')
         return price
+
+    def clean_delivery(self):
+        delivery = self.cleaned_data.get('delivery')
+        deliver_at = self.cleaned_data.get('deliver_at')
+        if deliver_at and delivery:
+            for order in delivery.orders.all():
+                if order.deliver_at.date() != deliver_at.date():
+                    raise forms.ValidationError(
+                        'Orders in the same delivery must have the same delivery date.'
+                    )
+        return delivery
